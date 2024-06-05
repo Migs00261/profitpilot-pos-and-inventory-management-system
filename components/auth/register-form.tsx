@@ -56,7 +56,7 @@ export default function RegisterForm() {
     headerLabel='Create an account 😃'
     backButtonLabel="Already have an account? sign-in"
     backButtonHref='/auth/login'
-    showSocial={true}
+    showSocial={false}
     description='create an account with us and manage your business today'
     >
       <Form {...form}>
