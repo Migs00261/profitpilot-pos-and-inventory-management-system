@@ -33,7 +33,8 @@ export default function LoginForm() {
     defaultValues:{
       email:"",
       password:""
-    }
+    },
+    mode:'onChange'
   })
   const onSubmit = (values:z.infer<typeof LoginSchema>)=>{
     setSuccess("")

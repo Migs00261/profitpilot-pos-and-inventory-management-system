@@ -94,7 +94,7 @@ export const {
       existingUser.id
      )
      token.isOAuth = !!existingAccount
-     token.name = existingUser.name
+     token.name = existingUser.firstname
      token.email = existingUser.email
     token.role = existingUser.role
     token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled
