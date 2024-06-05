@@ -17,25 +17,16 @@ export function Social() {
     <div className='flex items-center w-full gap-x-2'>
       <Button
       size="lg"
-      className='w-full'
+      className='w-full hover:text-coolGray800'
       variant="outline"
       onClick={()=>onClick("google")}
       >
         <FcGoogle
         className='h-5 w-5'
         ></FcGoogle>
+        <h2 className='ml-2 text-coolGray600 hover:text-coolGray800'>Sign-in with google</h2>
       </Button>
 
-      <Button
-      size="lg"
-      className='w-full'
-      variant="outline"
-      onClick={()=>onClick("github")}
-      >
-        <FaGithub
-        className='h-5 w-5'
-        ></FaGithub>
-      </Button>
     </div>
   )
 }

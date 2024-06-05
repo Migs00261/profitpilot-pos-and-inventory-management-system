@@ -4,6 +4,7 @@ import { CardWrapper } from './card-wrapper'
 import { useForm } from 'react-hook-form'
 import { useSearchParams } from 'next/navigation'
 import {zodResolver} from "@hookform/resolvers/zod"
+import {Button, ButtonGroup} from "@nextui-org/react";
 import {
 Form,
 FormControl,
@@ -15,7 +16,6 @@ FormMessage
 import * as z from "zod"
 import { LoginSchema } from '@/schemas'
 import { Input } from '../ui/input'
-import { Button } from '../ui/button'
 import { FormError } from '../form-error'
 import { FormSuccess } from '../form-success'
 import {Login} from "@/actions/login"
@@ -64,15 +64,16 @@ export default function LoginForm() {
 
   return (
     <CardWrapper
-    headerLabel='Welcome back'
+    headerLabel='Welcome back 😃'
     backButtonLabel="Don't have an account?"
     backButtonHref='/auth/register'
     showSocial={true}
+    description='Please enter your login details'
     >
       <Form {...form}>
         <form 
         onSubmit={form.handleSubmit(onSubmit)}
-        className='space-y-6'
+        className='space-y-2 md:space-y-4'
         >
           <div className='space-y-4'>
             {showTwoFactor && <>
@@ -104,12 +105,13 @@ export default function LoginForm() {
             name="email"
             render={({field})=>(
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel className="text-coolGray600">Email</FormLabel>
                 <FormControl>
                   <Input
                   {...field}
                   placeholder='john.doe@example.com'
                   type="email"
+                  className='bg-white'
                   disabled={isPending}
                   ></Input>
                 </FormControl>
@@ -125,23 +127,21 @@ export default function LoginForm() {
             name="password"
             render={({field})=>(
               <FormItem>
-                <FormLabel>Password</FormLabel>
+                <FormLabel className="text-coolGray600">Password</FormLabel>
                 <FormControl>
                   <Input
                   {...field}
-                  placeholder='************'
+                  className='bg-white'
+                  placeholder='At least 6 characters'
                   type="password"
                   disabled={isPending}
                   ></Input>
                 </FormControl>
-                <Button
-                size="sm"
-                variant="link"
-                asChild
-                className='px-0 font-normal'
-                >
-                  <Link href="/auth/reset">Forgot password?</Link>
-                </Button>
+                
+                <div className="">
+                  <Link href="/auth/reset" className='hover:underline text-[14px] text-coolGray600 font-medium hover:text-coolGray800'>Forgot password?</Link>
+                </div>
+                
                 <FormMessage/>
 
               </FormItem>
@@ -153,7 +153,7 @@ export default function LoginForm() {
           </div>
           <FormError message={error || urlError}></FormError>
           <FormSuccess message={success}></FormSuccess>
-          <Button type='submit' disabled={isPending} className='w-full'>{showTwoFactor ? "Confirm":"Login"}</Button>
+          <Button type='submit' disabled={isPending} className='w-full bg-primarycolor text-white text-[16px]' radius='sm'>{showTwoFactor ? "Confirm":"Login"}</Button>
 
         </form>
       </Form>
