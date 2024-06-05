@@ -65,7 +65,7 @@ export default function LoginForm() {
   return (
     <CardWrapper
     headerLabel='Welcome back 😃'
-    backButtonLabel="Don't have an account?"
+    backButtonLabel="Don't have an account? sign-up"
     backButtonHref='/auth/register'
     showSocial={true}
     description='Please enter your login details'

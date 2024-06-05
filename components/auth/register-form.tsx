@@ -21,8 +21,8 @@ import { Register } from '@/actions/register'
 import { useTransition } from 'react'
 export default function RegisterForm() {
   const [isPending,startTransition] = useTransition()
-  const [error,setError] = useState<string | undefined>("")
-  const [success,setSuccess] = useState<string | undefined>("")
+  const [error,setError] = useState<string | null>(null)
+  const [success,setSuccess] = useState<string | null>(null)
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver:zodResolver(RegisterSchema),
     defaultValues:{
@@ -32,25 +32,29 @@ export default function RegisterForm() {
       lastname:"",
       confirmpassword:""
 
-    }
+    },
+    mode:"onChange"
   })
+
   const onSubmit = (values:z.infer<typeof RegisterSchema>)=>{
-    setSuccess("")
-    setError("")
+    setSuccess(null)
+    setError(null)
     startTransition(()=>{
       Register(values).then((data:any)=>{
         setError(data.error)
         setSuccess(data.success)
+        
       })
 
     })
   
   }
 
+
   return (
     <CardWrapper
     headerLabel='Create an account 😃'
-    backButtonLabel="Already have an account?"
+    backButtonLabel="Already have an account? sign-in"
     backButtonHref='/auth/login'
     showSocial={true}
     description='create an account with us and manage your business today'

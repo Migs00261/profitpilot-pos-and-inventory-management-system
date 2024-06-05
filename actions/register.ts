@@ -13,7 +13,11 @@ export const Register = async (values:z.infer<typeof RegisterSchema>)=>{
         return {error:"Invalid fields"}
     }
 
-    const {name,email,password} = validatedFields.data
+    const {firstname,lastname,email,password,confirmpassword} = validatedFields.data
+    if(password != confirmpassword ){
+        return{error:"Passwords do not match"}
+
+    }
     const hashedPassword = await bcrypt.hash(password,10)
     const existingUser = await getUserByEmail(email)
     if(existingUser){
@@ -21,7 +25,8 @@ export const Register = async (values:z.infer<typeof RegisterSchema>)=>{
     }
     await db.user.create({
         data:{
-            name,
+            firstname,
+            lastname,
             email,
             password:hashedPassword
         }
