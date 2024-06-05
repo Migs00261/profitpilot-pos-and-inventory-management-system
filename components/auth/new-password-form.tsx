@@ -15,7 +15,7 @@ FormMessage
 import * as z from "zod"
 import { NewPasswordSchema } from '@/schemas'
 import { Input } from '../ui/input'
-import { Button } from '../ui/button'
+import { Button } from '@nextui-org/react'
 import { FormError } from '../form-error'
 import { FormSuccess } from '../form-success'
 import { newPassword } from '@/actions/new-password'
@@ -55,11 +55,12 @@ export default function NewPasswordForm() {
     headerLabel='Enter a new password'
     backButtonLabel="Back to login"
     backButtonHref='/auth/login'
+    description='please input the new password'
     >
       <Form {...form}>
         <form 
         onSubmit={form.handleSubmit(onSubmit)}
-        className='space-y-6'
+        className='space-y-2 md:space-y-4'
         >
           <div className='space-y-4'>
             <FormField
@@ -67,7 +68,7 @@ export default function NewPasswordForm() {
             name="password"
             render={({field})=>(
               <FormItem>
-                <FormLabel>Password</FormLabel>
+                <FormLabel className="text-coolGray600">Password</FormLabel>
                 <FormControl>
                   <Input
                   {...field}
@@ -87,7 +88,7 @@ export default function NewPasswordForm() {
           </div>
           <FormError message={error}></FormError>
           <FormSuccess message={success}></FormSuccess>
-          <Button type='submit' disabled={isPending} className='w-full'>Reset Password</Button>
+          <Button type='submit' disabled={isPending} className='w-full text-white bg-primarycolor' radius='sm'>Reset Password</Button>
 
         </form>
       </Form>

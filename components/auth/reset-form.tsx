@@ -14,7 +14,7 @@ FormMessage
 import * as z from "zod"
 import { ResetSchema } from '@/schemas'
 import { Input } from '../ui/input'
-import { Button } from '../ui/button'
+import { Button } from '@nextui-org/react'
 import { FormError } from '../form-error'
 import { FormSuccess } from '../form-success'
 import {Reset} from "@/actions/reset"
@@ -49,11 +49,12 @@ export default function ResetForm() {
     headerLabel='Forgot your password'
     backButtonLabel="Back to login"
     backButtonHref='/auth/login'
+    description='please enter your email address'
     >
       <Form {...form}>
         <form 
         onSubmit={form.handleSubmit(onSubmit)}
-        className='space-y-6'
+        className='space-y-2 md:space-y-4'
         >
           <div className='space-y-4'>
             <FormField
@@ -61,7 +62,7 @@ export default function ResetForm() {
             name="email"
             render={({field})=>(
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel className="text-coolGray600">Email</FormLabel>
                 <FormControl>
                   <Input
                   {...field}
@@ -81,7 +82,7 @@ export default function ResetForm() {
           </div>
           <FormError message={error}></FormError>
           <FormSuccess message={success}></FormSuccess>
-          <Button type='submit' disabled={isPending} className='w-full'>Send Reset email</Button>
+          <Button type='submit' disabled={isPending} className='w-full text-white bg-primarycolor' radius='sm' >Send Reset email</Button>
 
         </form>
       </Form>
