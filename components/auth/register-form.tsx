@@ -28,7 +28,10 @@ export default function RegisterForm() {
     defaultValues:{
       email:"",
       password:"",
-      name:""
+      firstname:"",
+      lastname:"",
+      confirmpassword:""
+
     }
   })
   const onSubmit = (values:z.infer<typeof RegisterSchema>)=>{
@@ -61,14 +64,32 @@ export default function RegisterForm() {
 
           <FormField
             control={form.control}
-            name="name"
+            name="firstname"
             render={({field})=>(
               <FormItem>
-                <FormLabel className="text-coolGray600">Name</FormLabel>
+                <FormLabel className="text-coolGray600">firstname</FormLabel>
                 <FormControl>
                   <Input
                   {...field}
-                  placeholder='John Doe'
+                  placeholder='John'
+                  disabled={isPending}
+                  ></Input>
+                </FormControl>
+                <FormMessage/>
+
+              </FormItem>
+            )}
+            />
+          <FormField
+            control={form.control}
+            name="lastname"
+            render={({field})=>(
+              <FormItem>
+                <FormLabel className="text-coolGray600">lastname</FormLabel>
+                <FormControl>
+                  <Input
+                  {...field}
+                  placeholder='Doe'
                   disabled={isPending}
                   ></Input>
                 </FormControl>
@@ -103,6 +124,25 @@ export default function RegisterForm() {
             render={({field})=>(
               <FormItem>
                 <FormLabel className="text-coolGray600">Password</FormLabel>
+                <FormControl>
+                  <Input
+                  {...field}
+                  placeholder='atleast 6 characters'
+                  type="password"
+                  disabled={isPending}
+                  ></Input>
+                </FormControl>
+                <FormMessage/>
+
+              </FormItem>
+            )}
+            />
+          <FormField
+            control={form.control}
+            name="confirmpassword"
+            render={({field})=>(
+              <FormItem>
+                <FormLabel className="text-coolGray600">ConfirmPassword</FormLabel>
                 <FormControl>
                   <Input
                   {...field}
