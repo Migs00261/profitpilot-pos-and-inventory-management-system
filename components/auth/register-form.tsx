@@ -14,8 +14,7 @@ FormMessage
 import * as z from "zod"
 import { RegisterSchema } from '@/schemas'
 import { Input } from '../ui/input'
-import { Button } from '../ui/button'
-import { log } from 'console'
+import { Button } from '@nextui-org/react'
 import { FormError } from '../form-error'
 import { FormSuccess } from '../form-success'
 import { Register } from '@/actions/register'
@@ -47,15 +46,16 @@ export default function RegisterForm() {
 
   return (
     <CardWrapper
-    headerLabel='Create an account'
+    headerLabel='Create an account 😃'
     backButtonLabel="Already have an account?"
     backButtonHref='/auth/login'
     showSocial={true}
+    description='create an account with us and manage your business today'
     >
       <Form {...form}>
         <form 
         onSubmit={form.handleSubmit(onSubmit)}
-        className='space-y-6'
+        className='space-y-2 md:space-y-4'
         >
           <div className='space-y-4'>
 
@@ -64,7 +64,7 @@ export default function RegisterForm() {
             name="name"
             render={({field})=>(
               <FormItem>
-                <FormLabel>Name</FormLabel>
+                <FormLabel className="text-coolGray600">Name</FormLabel>
                 <FormControl>
                   <Input
                   {...field}
@@ -82,7 +82,7 @@ export default function RegisterForm() {
             name="email"
             render={({field})=>(
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel className="text-coolGray600">Email</FormLabel>
                 <FormControl>
                   <Input
                   {...field}
@@ -102,11 +102,11 @@ export default function RegisterForm() {
             name="password"
             render={({field})=>(
               <FormItem>
-                <FormLabel>Password</FormLabel>
+                <FormLabel className="text-coolGray600">Password</FormLabel>
                 <FormControl>
                   <Input
                   {...field}
-                  placeholder='************'
+                  placeholder='atleast 6 characters'
                   type="password"
                   disabled={isPending}
                   ></Input>
@@ -120,7 +120,7 @@ export default function RegisterForm() {
           </div>
           <FormError message={error}></FormError>
           <FormSuccess message={success}></FormSuccess>
-          <Button type='submit' disabled={isPending} className='w-full'>Create an account</Button>
+          <Button type='submit' disabled={isPending} className='w-full bg-primarycolor text-white' radius='sm' >Create an account</Button>
 
         </form>
       </Form>
