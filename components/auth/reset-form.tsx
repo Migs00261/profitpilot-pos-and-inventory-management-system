@@ -82,7 +82,7 @@ export default function ResetForm() {
           </div>
           <FormError message={error}></FormError>
           <FormSuccess message={success}></FormSuccess>
-          <Button type='submit' disabled={isPending} className='w-full text-white bg-primarycolor' radius='sm' >Send Reset email</Button>
+          <Button type='submit' isDisabled={isPending} isLoading={isPending} className='w-full text-white bg-primarycolor' radius='sm' >Send Reset email</Button>
 
         </form>
       </Form>

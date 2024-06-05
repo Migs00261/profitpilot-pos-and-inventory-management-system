@@ -82,7 +82,7 @@ export default function LoginForm() {
             name="code"
             render={({field})=>(
               <FormItem>
-                <FormLabel>Two Factor Code</FormLabel>
+                <FormLabel className='text-coolGray600'>Two Factor Code (sent to your email address)</FormLabel>
                 <FormControl>
                   <Input
                   {...field}
@@ -153,7 +153,7 @@ export default function LoginForm() {
           </div>
           <FormError message={error || urlError}></FormError>
           <FormSuccess message={success}></FormSuccess>
-          <Button type='submit' disabled={isPending} className='w-full bg-primarycolor text-white text-[16px]' radius='sm'>{showTwoFactor ? "Confirm":"Login"}</Button>
+          <Button type='submit' isDisabled={isPending} isLoading={isPending} className='w-full bg-primarycolor text-white text-[16px]' radius='sm'>{showTwoFactor ? "Confirm":"Login"}</Button>
 
         </form>
       </Form>

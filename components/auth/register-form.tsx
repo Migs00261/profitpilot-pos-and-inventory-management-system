@@ -21,8 +21,8 @@ import { Register } from '@/actions/register'
 import { useTransition } from 'react'
 export default function RegisterForm() {
   const [isPending,startTransition] = useTransition()
-  const [error,setError] = useState<string | null>(null)
-  const [success,setSuccess] = useState<string | null>(null)
+  const [error,setError] = useState<string | undefined>("")
+  const [success,setSuccess] = useState<string | undefined>("")
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver:zodResolver(RegisterSchema),
     defaultValues:{
@@ -37,8 +37,8 @@ export default function RegisterForm() {
   })
 
   const onSubmit = (values:z.infer<typeof RegisterSchema>)=>{
-    setSuccess(null)
-    setError(null)
+    setSuccess("")
+    setError("")
     startTransition(()=>{
       Register(values).then((data:any)=>{
         setError(data.error)
@@ -164,7 +164,7 @@ export default function RegisterForm() {
           </div>
           <FormError message={error}></FormError>
           <FormSuccess message={success}></FormSuccess>
-          <Button type='submit' disabled={isPending} className='w-full bg-primarycolor text-white' radius='sm' >Create an account</Button>
+          <Button type='submit' isDisabled={isPending} isLoading={isPending} className='w-full bg-primarycolor text-white' radius='sm' >Create an account</Button>
 
         </form>
       </Form>

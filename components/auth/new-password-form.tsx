@@ -88,7 +88,7 @@ export default function NewPasswordForm() {
           </div>
           <FormError message={error}></FormError>
           <FormSuccess message={success}></FormSuccess>
-          <Button type='submit' disabled={isPending} className='w-full text-white bg-primarycolor' radius='sm'>Reset Password</Button>
+          <Button type='submit' isDisabled={isPending} isLoading={isPending} className='w-full text-white bg-primarycolor' radius='sm'>Reset Password</Button>
 
         </form>
       </Form>
