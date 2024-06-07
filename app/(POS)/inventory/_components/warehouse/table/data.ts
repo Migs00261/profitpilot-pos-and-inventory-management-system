@@ -1,8 +1,11 @@
 import React from "react";
 const columns = [
   {name: "Id", uid: "id"},
-  {name: "PRODUCTNAME", uid: "productname", sortable: true},
-  {name: "VALUES", uid: "values", sortable: true},
+  {name: "WAREHOUSE", uid: "warehouse", sortable: true},
+  {name: "PHONE", uid: "phone", sortable: true},
+  {name: "COUNTRY", uid: "country", sortable: true},
+  {name: "EMAIL", uid: "email", sortable: true},
+  {name: "ZIP CODE", uid: "zipcode", sortable: true},
   {name: "ACTION", uid: "actions"},
 ];
 
@@ -14,8 +17,11 @@ const statusOptions = [
 const users = [
   {
     id: 1,
-    productname: "electronics",
-    values:"23,24,25",
+    warehouse: "warehouse one",
+    phone:"+2547836889",
+    country:"kenya",
+    email:"xyvielyons@gmail.com",
+    zipcode:"00232"
     
 
   },

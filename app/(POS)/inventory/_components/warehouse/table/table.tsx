@@ -33,7 +33,7 @@ const statusColorMap: Record<string, ChipProps["color"]> = {
   outofstock: "danger",
 };
 
-const INITIAL_VISIBLE_COLUMNS = ["id","productname","values","actions"];
+const INITIAL_VISIBLE_COLUMNS = ["id","warehouse","phone","email","zipcode","actions"];
 
 type User = typeof users[0];
 
@@ -63,7 +63,7 @@ export default function TableComponent() {
 
     if (hasSearchFilter) {
       filteredUsers = filteredUsers.filter((user) =>
-        user.productname.toLowerCase().includes(filterValue.toLowerCase()),
+        user.warehouse.toLowerCase().includes(filterValue.toLowerCase()),
       );
     }
     // if (statusFilter !== "all" && Array.from(statusFilter).length !== statusOptions.length) {
@@ -181,7 +181,7 @@ export default function TableComponent() {
           <Input
             isClearable
             className="w-full sm:max-w-[44%]"
-            placeholder="Search by variants..."
+            placeholder="Search by warehouse name..."
             startContent={<SearchIcon />}
             value={filterValue}
             onClear={() => onClear()}
@@ -231,7 +231,7 @@ export default function TableComponent() {
               </DropdownMenu>
             </Dropdown>
             <Button className="bg-primarycolor text-white" endContent={<PlusIcon />}>
-              Add New
+              Add New Warehouse
             </Button>
           </div>
         </div>

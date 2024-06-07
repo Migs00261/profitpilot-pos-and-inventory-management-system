@@ -231,7 +231,7 @@ export default function TableComponent() {
               </DropdownMenu>
             </Dropdown>
             <Button className="bg-primarycolor text-white" endContent={<PlusIcon />}>
-              Add New
+              Add New Product
             </Button>
           </div>
         </div>

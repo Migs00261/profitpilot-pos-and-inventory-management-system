@@ -7,7 +7,7 @@ function BreadCrums() {
         <Breadcrumbs>
             <BreadcrumbItem>Home</BreadcrumbItem>
             <BreadcrumbItem>Inventory</BreadcrumbItem>
-            <BreadcrumbItem>Variants</BreadcrumbItem>
+            <BreadcrumbItem>warehouse</BreadcrumbItem>
         </Breadcrumbs>
     </div>
     
