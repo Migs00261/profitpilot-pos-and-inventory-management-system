@@ -4,7 +4,8 @@ import { UserButton } from '@/components/auth/user-button'
 import SecondTab from './SecondTab'
 import ThirdTab from './ThirdTab'
 import TableComponent from './table/table'
-
+import TableLoading from './tableloading'
+import { Suspense } from 'react'
 export default function VariantsPage() {
   return (
     <div>
@@ -27,7 +28,10 @@ export default function VariantsPage() {
 
       <div className="">
         <div className="bg-white w-full p-[16px]">
-           <TableComponent></TableComponent>
+          <Suspense fallback={<TableLoading></TableLoading>}>
+            <TableComponent></TableComponent>
+          </Suspense>
+           
         </div>
       </div>
 
