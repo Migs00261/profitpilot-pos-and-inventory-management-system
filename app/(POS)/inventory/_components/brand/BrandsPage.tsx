@@ -5,7 +5,7 @@ import SecondTab from './SecondTab'
 import ThirdTab from './ThirdTab'
 import TableComponent from './table/table'
 
-export default function AllProductsPage() {
+export default function BrandsPage() {
   return (
     <div>
 
