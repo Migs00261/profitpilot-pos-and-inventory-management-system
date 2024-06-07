@@ -8,27 +8,24 @@ import {
 
 } from "@/components/ui/dropdown-menu"
 
-import {
-Avatar,
-AvatarFallback,
-AvatarImage
-} from "@/components/ui/avatar"
+import {Avatar, AvatarGroup, AvatarIcon} from "@nextui-org/react";
 import { useCurrentUser } from "@/hooks/use-current-user"
 import { LogoutButton } from "@/components/auth/logout-button"
 import { ExitIcon } from "@radix-ui/react-icons"
 
 export const UserButton = ()=>{
     const user = useCurrentUser()
+    console.log(user)
     return(
         <DropdownMenu>
             <DropdownMenuTrigger>
-                <Avatar>
-                <AvatarImage src={user?.image || ""}/>
-                <AvatarFallback className="bg-sky-500">
-                    <FaUser className="text-white"/>
-
-                </AvatarFallback>
-                </Avatar>
+                <div className="flex space-x-2 justify-center items-center">
+                    <div className=""><Avatar size='sm' src={user?.image || ""} fallback={<FaUser className="text-white w-[16px] h-[16px]"/>}></Avatar></div>
+                    <div className="flex flex-col items-start justify-center">
+                        <h1 className="text-coolGray800 text-[16px] font-medium">{user?.firstname} {user?.lastname}</h1>
+                        <p className="text-coolGray600 text-[10px]">{user?.role}</p>
+                    </div>
+                </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-40" align="end">
                 <LogoutButton>

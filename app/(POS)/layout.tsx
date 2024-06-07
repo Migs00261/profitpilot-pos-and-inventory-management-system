@@ -6,7 +6,7 @@ function PosLayout({children}:{children: React.ReactNode}) {
         <div className="">
             <Navbar></Navbar>
         </div>
-        <div className="">{children}</div>
+        <div className="w-full h-screen">{children}</div>
         </div>
   )
 }

@@ -76,7 +76,8 @@ export const {
         session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as Boolean
       }
       if(session.user){
-        session.user.name = token.name
+        session.user.firstname = token.firstname as string
+        session.user.lastname = token.lastname as string
         session.user.email = token.email as string
         session.user.isOAuth = token.isOAuth as boolean
       }
@@ -94,7 +95,8 @@ export const {
       existingUser.id
      )
      token.isOAuth = !!existingAccount
-     token.name = existingUser.firstname
+     token.firstname = existingUser.firstname
+     token.lastname = existingUser.lastname
      token.email = existingUser.email
     token.role = existingUser.role
     token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled
