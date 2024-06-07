@@ -33,7 +33,7 @@ const statusColorMap: Record<string, ChipProps["color"]> = {
   outofstock: "danger",
 };
 
-const INITIAL_VISIBLE_COLUMNS = ["id","product","image","type","category","brand","saleprice","purchaseprice","currentstock","warehouse","status","actions" ];
+const INITIAL_VISIBLE_COLUMNS = ["id","productname","values","actions"];
 
 type User = typeof users[0];
 
@@ -63,17 +63,17 @@ export default function TableComponent() {
 
     if (hasSearchFilter) {
       filteredUsers = filteredUsers.filter((user) =>
-        user.product.toLowerCase().includes(filterValue.toLowerCase()),
+        user.productname.toLowerCase().includes(filterValue.toLowerCase()),
       );
     }
-    if (statusFilter !== "all" && Array.from(statusFilter).length !== statusOptions.length) {
-      filteredUsers = filteredUsers.filter((user) =>
-        Array.from(statusFilter).includes(user.status),
-      );
-    }
+    // if (statusFilter !== "all" && Array.from(statusFilter).length !== statusOptions.length) {
+    //   filteredUsers = filteredUsers.filter((user) =>
+    //     Array.from(statusFilter).includes(user.status),
+    //   );
+    // }
 
     return filteredUsers;
-  }, [users, filterValue, statusFilter]);
+  }, [users, filterValue]);
 
   const pages = Math.ceil(filteredItems.length / rowsPerPage);
 
@@ -115,12 +115,12 @@ export default function TableComponent() {
             {/* <p className="text-bold text-tiny capitalize text-default-400">{user.team}</p> */}
           </div>
         );
-      case "status":
-        return (
-          <Chip className="capitalize" color={statusColorMap[user.status]} size="sm" variant="flat">
-            {cellValue}
-          </Chip>
-        );
+      // case "status":
+      //   return (
+      //     <Chip className="capitalize" color={statusColorMap[user.status]} size="sm" variant="flat">
+      //       {cellValue}
+      //     </Chip>
+      //   );
       case "actions":
         return (
           <div className="relative flex justify-end items-center gap-2">
@@ -181,14 +181,14 @@ export default function TableComponent() {
           <Input
             isClearable
             className="w-full sm:max-w-[44%]"
-            placeholder="Search by productname..."
+            placeholder="Search by variants..."
             startContent={<SearchIcon />}
             value={filterValue}
             onClear={() => onClear()}
             onValueChange={onSearchChange}
           />
           <div className="flex gap-3">
-            <Dropdown>
+            {/* <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
                 <Button endContent={<ChevronDownIcon className="text-small" />} variant="flat">
                   Status
@@ -208,7 +208,7 @@ export default function TableComponent() {
                   </DropdownItem>
                 ))}
               </DropdownMenu>
-            </Dropdown>
+            </Dropdown> */}
             <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
                 <Button endContent={<ChevronDownIcon className="text-small" />} variant="flat">

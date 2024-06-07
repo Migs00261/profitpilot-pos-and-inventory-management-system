@@ -12,7 +12,7 @@ function SecondTab() {
                <MdInventory className='w-[32px] h-[32px]' />
             </div>
             <div className="font-bold text-[24px]">
-                /Products
+                /Variants
             </div>
         </div>
 
