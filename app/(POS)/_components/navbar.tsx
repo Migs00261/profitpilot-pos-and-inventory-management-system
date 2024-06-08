@@ -4,7 +4,7 @@ import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import Image from 'next/image';
 import Dot from './dot';
 import { BiRun } from "react-icons/bi";
-import { usePathname, useSearchParams } from 'next/navigation'
+import { usePathname} from 'next/navigation'
 import { TbLayoutDashboardFilled } from "react-icons/tb";
 import { MdInventory } from "react-icons/md";
 import { MdPeopleAlt } from "react-icons/md";
@@ -12,38 +12,39 @@ import { IoMdCart } from "react-icons/io";
 import { IoMdReturnLeft } from "react-icons/io";
 import { IoSettings } from "react-icons/io5";
 import { useEffect } from 'react'
+import { useState,useCallback } from 'react';
 function Navbar() {
-    const pathname = usePathname()
-  const searchParams = useSearchParams()
- 
+    const mypathname = usePathname()
+    const [navbar,setNavbar] = useState<boolean>(false)
+    const [pathname,setPathname] = useState<String>('')
+    
+    const navbarTrigger = useCallback(()=>{
+        navbar ? setNavbar(false) : setNavbar(true)
+    },[navbar])
+
     useEffect(() => {
-        const url = `${pathname}?${searchParams}`
-        console.log(url)
-        // You can now use the current URL
-        // ...
-    }, [pathname, searchParams])
+        setPathname(mypathname)
+    }, [mypathname])
 
   return (
     <div>
-     <Sidebar className='text-[16px]' backgroundColor='#FFFFFF' collapsed={false}>
+     <Sidebar className='text-[16px] space-y-4' backgroundColor='#FFFFFF' collapsed={navbar}>
         <div className="profitpilotlogo w-full flex items-center justify-center p-2">
           <Image src="/logo-no-background.svg" alt='profit pilot logo' width={150} height={150} ></Image>
         </div>
-        <div className="bg-[#21272A] p-[16px] text-white m-[16px] rounded">
-            <h1 className='text-[16px] font-medium'>Warehouse 1</h1>
-            <p className='text-[12px] font-normal '>Nairobi upper floor</p>
-        </div>
+        <button onClick={navbarTrigger}>click</button>
         
         <Menu>
         
         <MenuItem className={`${pathname == '/quickactions'?'text-white bg-primarycolor rounded':'text-coolGray600'} hover:text-coolGray800`} icon={<BiRun className='w-[24px] h-[24px]'></BiRun>} component={<Link href="/quickactions" />}>Quick Actions</MenuItem>
         <MenuItem className={`${pathname == '/dashboard'?'text-white bg-primarycolor rounded':'text-coolGray600'} hover:text-coolGray800`} icon={<TbLayoutDashboardFilled className='w-[24px] h-[24px]'></TbLayoutDashboardFilled>} component={<Link href="/dashboard" />}>Dashboard</MenuItem>
 
-    <SubMenu className={`${pathname.startsWith('/inventory')?'text-white bg-primarycolor rounded':'text-coolGray600 hover:text-white'} hover:text-coolGray800`} label="Inventory" icon={<MdInventory className='w-[24px] h-[24px]'></MdInventory>} component={<Link href="/inventory" />}>
+    <SubMenu className={`${pathname.startsWith('/inventory')?'text-white bg-primarycolor':'text-coolGray600'} hover:text-coolGray800`} label="Inventory" icon={<MdInventory className='w-[24px] h-[24px]'></MdInventory>} component={<Link href="/inventory" />}>
+
         <MenuItem className={`${pathname == '/inventory/allproducts' ?' bg-blue-100 rounded m-[8px] text-coolGray800 font-medium':'text-coolGray600'}`}  component={<Link href="/inventory/allproducts" />}>
             <div className="flex flex-row space-x-2 items-center w-full">
                 <div className="">{pathname == '/inventory/allproducts' && <Dot></Dot>}</div>
-                <div className='text-[16px]'>All Products</div>
+                <div className='text-[16px]'>Products</div>
             </div>
             
         </MenuItem>

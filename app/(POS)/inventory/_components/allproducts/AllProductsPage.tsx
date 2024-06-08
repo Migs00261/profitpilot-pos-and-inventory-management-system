@@ -1,37 +1,29 @@
 import React from 'react'
-import BreadCrums from './BreadCrums'
-import { UserButton } from '@/components/auth/user-button'
-import SecondTab from './SecondTab'
+import LocationTab from '@/app/(POS)/_components/LocationTab'
 import ThirdTab from './ThirdTab'
 import TableComponent from './table/table'
-import SkeletonNavbar from './skeletonNavbar'
-import { Suspense } from 'react'
+import InventoryNavbarComponent from '@/app/(POS)/_components/InventoryNavbarComponent'
 export default function AllProductsPage() {
   return (
     <div>
-      <div className="flex md:flex-row md:justify-between md:items-center bg-white p-[8px] flex-col gap-2 md:gap-0">
-          <div className="">
-            <Suspense fallback={<SkeletonNavbar></SkeletonNavbar>}>
-              <BreadCrums></BreadCrums>
-            </Suspense>
-            
-          </div>
-          <div>
-            <UserButton></UserButton>
-          </div>
+      
+      <div className="">
+          <InventoryNavbarComponent path='Products'></InventoryNavbarComponent>
       </div>
 
       <div className="">
-        <SecondTab></SecondTab>
+        <LocationTab Location="Products"></LocationTab>
       </div>
       <div className="">
         <ThirdTab></ThirdTab>
       </div>
 
       <div className="">
-        <div className="bg-white w-full p-[16px]">
+      
+        <div className="bg-white w-full p-[16px] overflow-hidden">
            <TableComponent></TableComponent>
         </div>
+      
       </div>
 
 

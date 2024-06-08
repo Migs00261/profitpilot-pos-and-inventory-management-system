@@ -83,3 +83,50 @@ model TwoFactorConfirmation {
   @@unique([userId])
 
 }
+model Products {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  product String
+  image String
+  type String
+  category String
+  brand String
+  salePrice String
+  purchaseprice String
+  stockunit String
+  warehouse String
+}
+
+model Brands {
+  id String   @id @default(auto()) @map("_id") @db.ObjectId
+  Brand String
+  Image String
+  Description String
+}
+
+model Categories {
+  id String   @id @default(auto()) @map("_id") @db.ObjectId
+  category String
+  Description String
+}
+model Inventory {
+  id String   @id @default(auto()) @map("_id") @db.ObjectId
+  unit String
+  shortname String
+  baseunit String
+  operator String
+  operatorvalue String
+}
+model Warehouses{
+  id String   @id @default(auto()) @map("_id") @db.ObjectId
+  warehouse String
+  phone String
+  country String
+  city String
+  email String
+  zipcode String
+}
+model Variation{
+  id String   @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  values String[]
+}

@@ -7,7 +7,6 @@ import {
   TableBody,
   TableRow,
   TableCell,
-  Input,
   Button,
   DropdownTrigger,
   Dropdown,
@@ -20,7 +19,9 @@ import {
   ChipProps,
   SortDescriptor
 } from "@nextui-org/react";
+
 import {PlusIcon} from "./PlusIcon";
+import { Input } from "@nextui-org/react";
 import {VerticalDotsIcon} from "./VerticalDotsIcon";
 import { ChevronDownIcon } from "./ChevronDownIcon";
 import {SearchIcon} from "./SearchIcon";
@@ -180,7 +181,8 @@ export default function TableComponent() {
         <div className="flex justify-between gap-3 items-end">
           <Input
             isClearable
-            className="w-full sm:max-w-[44%]"
+            variant="flat"
+            className="sm:max-w-[44%]"
             placeholder="Search by productname..."
             startContent={<SearchIcon />}
             value={filterValue}
@@ -291,14 +293,15 @@ export default function TableComponent() {
   }, [selectedKeys, items.length, page, pages, hasSearchFilter]);
 
   return (
-    <Table
+    <div className="overflow-scroll">
+      <Table
       isStriped
       aria-label="Example table with custom cells, pagination and sorting"
       isHeaderSticky
       bottomContent={bottomContent}
       bottomContentPlacement="outside"
       classNames={{
-        wrapper: "max-h-[400px] w-full overflow-scroll",
+        wrapper: "max-h-[400px] ",
         
       }}
       selectedKeys={selectedKeys}
@@ -328,5 +331,8 @@ export default function TableComponent() {
         )}
       </TableBody>
     </Table>
+
+    </div>
+    
   );
 }

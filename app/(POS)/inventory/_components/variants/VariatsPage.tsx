@@ -1,26 +1,20 @@
 import React from 'react'
-import BreadCrums from './BreadCrums'
-import { UserButton } from '@/components/auth/user-button'
-import SecondTab from './SecondTab'
 import ThirdTab from './ThirdTab'
 import TableComponent from './table/table'
 import TableLoading from './tableloading'
 import { Suspense } from 'react'
+import InventoryNavbarComponent from '@/app/(POS)/_components/InventoryNavbarComponent'
+import LocationTab from '@/app/(POS)/_components/LocationTab'
 export default function VariantsPage() {
   return (
     <div>
 
-      <div className="flex md:flex-row md:justify-between md:items-center bg-white p-[8px] flex-col gap-2 md:gap-0">
-          <div className="">
-            <BreadCrums></BreadCrums>
-          </div>
-          <div>
-            <UserButton></UserButton>
-          </div>
+      <div className="">
+        <InventoryNavbarComponent path='Variants'></InventoryNavbarComponent>
       </div>
 
       <div className="">
-        <SecondTab></SecondTab>
+        <LocationTab Location="Variants"/>
       </div>
       <div className="">
         <ThirdTab></ThirdTab>

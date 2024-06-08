@@ -1,12 +1,27 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
- 
+
+*, ::before, ::after {
+  --tw-ring-color: transparent;
+}
 
 html,body,:root{
   height: 100%;
+  border-width: 0;
 
 }
+input,Input{
+  border-width: 0;
+}
+[type="text"],select{
+  border-width: 0;
+}
+[type="text"]:focus ,select:focus{
+  --tw-ring-color: transparent;
+
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -33,7 +48,7 @@ html,body,:root{
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
+    
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
  

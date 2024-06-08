@@ -1,10 +1,14 @@
+
 import React from 'react'
 import { MdInventory } from "react-icons/md";
-import {Button, ButtonGroup} from "@nextui-org/react";
+import {Button} from "@nextui-org/react";
 import { IoCloudDownloadOutline } from "react-icons/io5";
 import { HiOutlinePrinter } from "react-icons/hi";
-import { IoMdAdd } from "react-icons/io";
-function SecondTab() {
+
+type LocationType = {
+  Location:String
+}
+function LocationTab({Location}:LocationType) {
   return (
     <div className='bg-white p-[8px] flex flex-col md:flex-row md:items-center md:justify-between border-slate-200 border-b-[1px] gap-2 md:gap-0'>
         <div className="space-y-2 flex flex-row md:items-center md:justify-center text-coolGray600">
@@ -12,7 +16,7 @@ function SecondTab() {
                <MdInventory className='w-[32px] h-[32px]' />
             </div>
             <div className="font-bold text-[24px]">
-                /Products
+                /{Location}
             </div>
         </div>
 
@@ -27,4 +31,4 @@ function SecondTab() {
   )
 }
 
-export default SecondTab
+export default LocationTab

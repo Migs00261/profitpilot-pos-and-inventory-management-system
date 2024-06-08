@@ -1,25 +1,19 @@
 import React from 'react'
-import BreadCrums from './BreadCrums'
-import { UserButton } from '@/components/auth/user-button'
-import SecondTab from './SecondTab'
+import LocationTab from '@/app/(POS)/_components/LocationTab'
 import ThirdTab from './ThirdTab'
 import TableComponent from './table/table'
+import InventoryNavbarComponent from '@/app/(POS)/_components/InventoryNavbarComponent'
 
 export default function BrandsPage() {
   return (
     <div>
 
-      <div className="flex md:flex-row md:justify-between md:items-center bg-white p-[8px] flex-col gap-2 md:gap-0">
-          <div className="">
-            <BreadCrums></BreadCrums>
-          </div>
-          <div>
-            <UserButton></UserButton>
-          </div>
+      <div className="">
+        <InventoryNavbarComponent path='Brands'></InventoryNavbarComponent>
       </div>
 
       <div className="">
-        <SecondTab></SecondTab>
+        <LocationTab Location="Brands"></LocationTab>
       </div>
       <div className="">
         <ThirdTab></ThirdTab>

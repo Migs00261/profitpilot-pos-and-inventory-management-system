@@ -1,14 +1,16 @@
 import type { Config } from "tailwindcss"
 import { nextui } from "@nextui-org/react";
-
+import flowbite from "flowbite-react/tailwind";
 const config = {
   darkMode: ["class"],
   content: [
+    
     './pages/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
     "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
+    flowbite.content(),
 	],
   prefix: "",
   theme: {
@@ -20,6 +22,9 @@ const config = {
       },
     },
     extend: {
+      backgroundImage: (theme) => ({
+        'custom-gradient': `linear-gradient(105.69deg, #1E90FF -7.59%, #00CED1 102.64%);`,
+      }),
       colors: {
         primarycolor:'#0C87F3',
         coolGray800:'#343A3F',
@@ -80,7 +85,7 @@ const config = {
     },
   },
   
-  plugins: [require("tailwindcss-animate"),nextui()],
+  plugins: [require("tailwindcss-animate"),flowbite.plugin(),nextui()],
 } satisfies Config
 
 export default config
