@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
+import { Providers } from "@/providers/providers";
 import "./globals.css";
 import {NextUIProvider} from "@nextui-org/react";
 import { Toaster } from "@/components/ui/toaster"
@@ -22,14 +23,22 @@ export default async function RootLayout({
 }>) {
 const session = await auth()
   return (
-    <SessionProvider session={session}>
-      <html lang="en">
-      <body className={`${roboto.className} max-w-screen-xl mx-auto`}>
-        <Toaster/>
-        <NextUIProvider>{children}</NextUIProvider>
-        </body>
-    </html>
-    </SessionProvider>
+    
+          <SessionProvider session={session}>
+            <html lang="en">
+            <body className={`${roboto.className} max-w-screen-xl mx-auto`}>
+            <Toaster/>
+            <NextUIProvider>
+            <Providers>
+              {children}
+             </Providers> 
+              </NextUIProvider>
+            </body>
+            </html>
+          </SessionProvider>  
+
+    
+    
     
   );
 }

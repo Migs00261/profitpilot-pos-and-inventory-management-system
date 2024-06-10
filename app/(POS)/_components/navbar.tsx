@@ -12,15 +12,18 @@ import { IoMdCart } from "react-icons/io";
 import { IoMdReturnLeft } from "react-icons/io";
 import { IoSettings } from "react-icons/io5";
 import { useEffect } from 'react'
-import { useState,useCallback } from 'react';
+import { useAppSelector } from '@/redux/hooks/hooks';
+import { useState} from 'react';
 function Navbar() {
     const mypathname = usePathname()
     const [navbar,setNavbar] = useState<boolean>(false)
     const [pathname,setPathname] = useState<String>('')
+    const sidebarnavstate = useAppSelector((state)=>state.reducer.sidebarnav.sidebarnav)
     
-    const navbarTrigger = useCallback(()=>{
-        navbar ? setNavbar(false) : setNavbar(true)
-    },[navbar])
+    useEffect(()=>{
+        setNavbar(sidebarnavstate)
+    },[sidebarnavstate])
+    
 
     useEffect(() => {
         setPathname(mypathname)
@@ -32,7 +35,7 @@ function Navbar() {
         <div className="profitpilotlogo w-full flex items-center justify-center p-2">
           <Image src="/logo-no-background.svg" alt='profit pilot logo' width={150} height={150} ></Image>
         </div>
-        <button onClick={navbarTrigger}>click</button>
+     
         
         <Menu>
         
