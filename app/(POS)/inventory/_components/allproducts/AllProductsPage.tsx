@@ -3,6 +3,7 @@ import LocationTab from '@/app/(POS)/_components/LocationTab'
 import ThirdTab from './ThirdTab'
 import TableComponent from './table/table'
 import InventoryNavbarComponent from '@/app/(POS)/_components/InventoryNavbarComponent'
+import SidebarNavProductDrawer from './SidebarNavProductDrawer'
 export default function AllProductsPage() {
   return (
     <div>
@@ -24,6 +25,9 @@ export default function AllProductsPage() {
            <TableComponent></TableComponent>
         </div>
       
+      </div>
+      <div>
+        <SidebarNavProductDrawer></SidebarNavProductDrawer>
       </div>
 
 

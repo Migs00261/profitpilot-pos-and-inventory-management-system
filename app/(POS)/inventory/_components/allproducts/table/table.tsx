@@ -26,6 +26,8 @@ import {VerticalDotsIcon} from "./VerticalDotsIcon";
 import { ChevronDownIcon } from "./ChevronDownIcon";
 import {SearchIcon} from "./SearchIcon";
 import {columns, users, statusOptions} from "./data";
+import { useAppDispatch } from "@/redux/hooks/hooks";
+import { sidebarinventoryproductsdrawertrigger } from "@/redux/slices/sidebarInventoryProductsDrawerSlice.ts";
 import {capitalize} from "./utils";
 
 
@@ -48,7 +50,10 @@ export default function TableComponent() {
     column: "currentstock",
     direction: "ascending",
   });
-
+  const dispatch = useAppDispatch()
+  function openDrawer(){
+    dispatch(sidebarinventoryproductsdrawertrigger())
+  }
   const [page, setPage] = React.useState(1);
 
   const hasSearchFilter = Boolean(filterValue);
@@ -232,7 +237,7 @@ export default function TableComponent() {
                 ))}
               </DropdownMenu>
             </Dropdown>
-            <Button className="bg-primarycolor text-white" endContent={<PlusIcon />}>
+            <Button onClick={openDrawer} className="bg-primarycolor text-white" endContent={<PlusIcon />}>
               Add New Product
             </Button>
           </div>

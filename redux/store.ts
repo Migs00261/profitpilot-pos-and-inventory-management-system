@@ -3,6 +3,8 @@ import storage from "redux-persist/lib/storage"
 import {persistReducer} from "redux-persist"
 import sidebarnavSlice from "./slices/sidebarnav"
 import sidebarInventoryBrandSlice from "./slices/sidebarInventoryBrandSlice"
+import sidebarInventoryProductsDrawerSlice from "./slices/sidebarInventoryProductsDrawerSlice.ts"
+import sidebarInventoryCategoryDrawerSlice from "./slices/sidebarInventoryCategoryDrawerSlice"
 const persistConfig = {
     key:"root",
     version:1,
@@ -11,7 +13,9 @@ const persistConfig = {
 
 const reducer = combineReducers({
     sidebarnav:sidebarnavSlice,
-    sidebarnavbrand:sidebarInventoryBrandSlice
+    sidebarnavbrand:sidebarInventoryBrandSlice,
+    sidebarinventoryproductsdrawer:sidebarInventoryProductsDrawerSlice,
+    sidebarinventorycategorydrawer:sidebarInventoryCategoryDrawerSlice
 
 })
 
