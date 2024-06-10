@@ -19,9 +19,6 @@ function SidebarNavProductDrawer() {
   };
   return (
     <>
-      <div className="flex min-h-[50vh] items-center justify-center">
-        <Button onClick={() => setIsOpen(true)}>Show contact form</Button>
-      </div>
       <Drawer open={isOpen} onClose={handleClose} position="right">
         <Drawer.Header title="CONTACT US" titleIcon={HiEnvelope} />
         <Drawer.Items>

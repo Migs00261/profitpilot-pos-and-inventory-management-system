@@ -26,6 +26,8 @@ import { ChevronDownIcon } from "./ChevronDownIcon";
 import {SearchIcon} from "./SearchIcon";
 import {columns, users, statusOptions} from "./data";
 import {capitalize} from "./utils";
+import { useAppDispatch } from "@/redux/hooks/hooks";
+import { sidebarinventoryvariantsdrawertrigger } from "@/redux/slices/sidebarInventoryVariantsDrawerSlice";
 
 
 const statusColorMap: Record<string, ChipProps["color"]> = {
@@ -47,6 +49,10 @@ export default function TableComponent() {
     column: "currentstock",
     direction: "ascending",
   });
+  const dispatch = useAppDispatch()
+  function openDrawer(){
+    dispatch(sidebarinventoryvariantsdrawertrigger())
+  }
 
   const [page, setPage] = React.useState(1);
 
@@ -230,7 +236,7 @@ export default function TableComponent() {
                 ))}
               </DropdownMenu>
             </Dropdown>
-            <Button className="bg-primarycolor text-white" endContent={<PlusIcon />}>
+            <Button onClick={openDrawer} className="bg-primarycolor text-white" endContent={<PlusIcon />}>
               Add New Variants
             </Button>
           </div>

@@ -5,6 +5,7 @@ import TableLoading from './tableloading'
 import { Suspense } from 'react'
 import InventoryNavbarComponent from '@/app/(POS)/_components/InventoryNavbarComponent'
 import LocationTab from '@/app/(POS)/_components/LocationTab'
+import SidebarNavVariantsDrawer from './SidebarNavVariantsDrawer'
 export default function VariantsPage() {
   return (
     <div>
@@ -27,6 +28,11 @@ export default function VariantsPage() {
           </Suspense>
            
         </div>
+      </div>
+      
+      <div className="">
+        <SidebarNavVariantsDrawer></SidebarNavVariantsDrawer>
+
       </div>
 
 

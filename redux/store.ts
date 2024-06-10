@@ -5,6 +5,10 @@ import sidebarnavSlice from "./slices/sidebarnav"
 import sidebarInventoryBrandSlice from "./slices/sidebarInventoryBrandSlice"
 import sidebarInventoryProductsDrawerSlice from "./slices/sidebarInventoryProductsDrawerSlice.ts"
 import sidebarInventoryCategoryDrawerSlice from "./slices/sidebarInventoryCategoryDrawerSlice"
+import sidebarInventoryVariantsDrawerSlice from "./slices/sidebarInventoryVariantsDrawerSlice"
+import sidebarInventoryUnitsDrawerSlice from "./slices/sidebarInventoryUnitsDrawerSlice"
+import sidebarInventoryWarehouseDrawerSlice from "./slices/sidebarInventoryWarehouseDrawerSlice"
+
 const persistConfig = {
     key:"root",
     version:1,
@@ -15,7 +19,10 @@ const reducer = combineReducers({
     sidebarnav:sidebarnavSlice,
     sidebarnavbrand:sidebarInventoryBrandSlice,
     sidebarinventoryproductsdrawer:sidebarInventoryProductsDrawerSlice,
-    sidebarinventorycategorydrawer:sidebarInventoryCategoryDrawerSlice
+    sidebarinventorycategorydrawer:sidebarInventoryCategoryDrawerSlice,
+    sidebarinventoryvariantsdrawer:sidebarInventoryVariantsDrawerSlice,
+    sidebarinventoryunitsdrawer:sidebarInventoryUnitsDrawerSlice,
+    sidebarinventorywarehousedrawer:sidebarInventoryWarehouseDrawerSlice
 
 })
 

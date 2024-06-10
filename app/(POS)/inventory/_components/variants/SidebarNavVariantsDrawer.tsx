@@ -2,20 +2,20 @@
 
 import { Button, Drawer, Label, Textarea, TextInput } from "flowbite-react";
 import { useEffect, useState } from "react";
-import { sidebarnavbrandtrigger } from "@/redux/slices/sidebarInventoryBrandSlice";
 import { HiEnvelope } from "react-icons/hi2";
 import { useAppDispatch,useAppSelector } from "@/redux/hooks/hooks";
-function SidebarNavBrand() {
+import { sidebarinventoryvariantsdrawertrigger } from "@/redux/slices/sidebarInventoryVariantsDrawerSlice";
+function SidebarNavVariantsDrawer() {
     const dispatch = useAppDispatch()
-    const sidebarbavbrandstate = useAppSelector((state)=>state.reducer.sidebarnavbrand.sidebarnav)
+    const sidebarvariantsdrawerstate = useAppSelector((state)=>state.reducer.sidebarinventoryvariantsdrawer.sidebardrawer)
     const [isOpen, setIsOpen] = useState(false);
 
     useEffect(()=>{
-        setIsOpen(sidebarbavbrandstate)
-    },[sidebarbavbrandstate])
+        setIsOpen(sidebarvariantsdrawerstate)
+    },[sidebarvariantsdrawerstate])
 
   const handleClose = () => {
-    dispatch(sidebarnavbrandtrigger())
+    dispatch(sidebarinventoryvariantsdrawertrigger())
   };
   return (
     <>
@@ -64,4 +64,4 @@ function SidebarNavBrand() {
   )
 }
 
-export default SidebarNavBrand
+export default SidebarNavVariantsDrawer

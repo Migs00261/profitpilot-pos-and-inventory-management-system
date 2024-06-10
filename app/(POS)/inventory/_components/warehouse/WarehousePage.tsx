@@ -3,6 +3,7 @@ import ThirdTab from './ThirdTab'
 import TableComponent from './table/table'
 import InventoryNavbarComponent from '@/app/(POS)/_components/InventoryNavbarComponent'
 import LocationTab from '@/app/(POS)/_components/LocationTab'
+import SidebarNavWarehouseDrawer from './SidebarNavWarehouseDrawer'
 
 export default function WarehousePage() {
   return (
@@ -23,6 +24,10 @@ export default function WarehousePage() {
         <div className="bg-white w-full p-[16px]">
            <TableComponent></TableComponent>
         </div>
+      </div>
+      
+      <div className="">
+        <SidebarNavWarehouseDrawer></SidebarNavWarehouseDrawer>
       </div>
 
 
