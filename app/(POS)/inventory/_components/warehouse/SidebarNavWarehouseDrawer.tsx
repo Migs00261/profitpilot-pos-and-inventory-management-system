@@ -20,7 +20,7 @@ function SidebarNavWarehouseDrawer() {
   return (
     <>
       <Drawer open={isOpen} onClose={handleClose} position="right">
-        <Drawer.Header title="CONTACT US" titleIcon={HiEnvelope} />
+        <Drawer.Header title="Add New Warehouse" titleIcon={HiEnvelope} />
         <Drawer.Items>
           <form action="#">
             <div className="mb-6 mt-3">

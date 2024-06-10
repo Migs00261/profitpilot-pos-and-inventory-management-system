@@ -21,7 +21,7 @@ function SidebarNavCategoryDrawer() {
     <>
       
       <Drawer open={isOpen} onClose={handleClose} position="right">
-        <Drawer.Header title="CONTACT US" titleIcon={HiEnvelope} />
+        <Drawer.Header title="Add New Category" titleIcon={HiEnvelope} />
         <Drawer.Items>
           <form action="#">
             <div className="mb-6 mt-3">
