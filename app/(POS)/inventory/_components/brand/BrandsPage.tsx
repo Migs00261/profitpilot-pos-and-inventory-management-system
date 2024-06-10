@@ -3,7 +3,7 @@ import LocationTab from '@/app/(POS)/_components/LocationTab'
 import ThirdTab from './ThirdTab'
 import TableComponent from './table/table'
 import InventoryNavbarComponent from '@/app/(POS)/_components/InventoryNavbarComponent'
-
+import SidebarNavBrand from './SidebarNavBrand'
 export default function BrandsPage() {
   return (
     <div>
@@ -23,6 +23,10 @@ export default function BrandsPage() {
         <div className="bg-white w-full p-[16px]">
            <TableComponent></TableComponent>
         </div>
+      </div>
+
+      <div>
+        <SidebarNavBrand></SidebarNavBrand>
       </div>
 
 

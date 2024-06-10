@@ -2,6 +2,7 @@ import {configureStore,combineReducers} from "@reduxjs/toolkit"
 import storage from "redux-persist/lib/storage"
 import {persistReducer} from "redux-persist"
 import sidebarnavSlice from "./slices/sidebarnav"
+import sidebarInventoryBrandSlice from "./slices/sidebarInventoryBrandSlice"
 const persistConfig = {
     key:"root",
     version:1,
@@ -9,7 +10,8 @@ const persistConfig = {
 }
 
 const reducer = combineReducers({
-    sidebarnav:sidebarnavSlice
+    sidebarnav:sidebarnavSlice,
+    sidebarnavbrand:sidebarInventoryBrandSlice
 
 })
 

@@ -23,7 +23,7 @@ export default function InventoryNavbarComponent({path}:InventoryNav) {
 
         <div className="flex items-center justify-center space-x-4" >
             <div className="">
-                <button className='w-[42px] h-[42px]' onClick={handleNavbarTrigger}>{!sidebarnavstate ? <IoClose className='w-[32px] h-[32px] text-primarycolor'></IoClose>:<RxHamburgerMenu className='text-primarycolor w-[32px] h-[32px]'></RxHamburgerMenu>}</button>
+                <button className='w-[42px] h-[42px]' onClick={handleNavbarTrigger}>{!sidebarnavstate ? <IoClose className='w-[24px] h-[24px] hover:text-coolGray800 text-coolGray800'></IoClose>:<RxHamburgerMenu className='hover:text-coolGray800 text-coolGray800 w-[24px] h-[24px]'></RxHamburgerMenu>}</button>
             </div>
            <div className="">
                 <Breadcrumbs>

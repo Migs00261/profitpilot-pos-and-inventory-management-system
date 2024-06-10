@@ -20,6 +20,8 @@ import {
   ChipProps,
   SortDescriptor
 } from "@nextui-org/react";
+import { useAppDispatch } from "@/redux/hooks/hooks";
+import { sidebarnavbrandtrigger } from "@/redux/slices/sidebarInventoryBrandSlice";
 import {PlusIcon} from "./PlusIcon";
 import {VerticalDotsIcon} from "./VerticalDotsIcon";
 import { ChevronDownIcon } from "./ChevronDownIcon";
@@ -47,7 +49,10 @@ export default function TableComponent() {
     column: "currentstock",
     direction: "ascending",
   });
-
+  const dispatch = useAppDispatch()
+  function openDrawer(){
+    dispatch(sidebarnavbrandtrigger())
+  }
   const [page, setPage] = React.useState(1);
 
   const hasSearchFilter = Boolean(filterValue);
@@ -230,7 +235,7 @@ export default function TableComponent() {
                 ))}
               </DropdownMenu>
             </Dropdown>
-            <Button className="bg-primarycolor text-white" endContent={<PlusIcon />}>
+            <Button onClick={openDrawer} className="bg-primarycolor text-white" endContent={<PlusIcon />}>
               Add New Brand
             </Button>
           </div>
