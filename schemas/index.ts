@@ -67,3 +67,23 @@ export const RegisterSchema = z.object({
         message:'Last Name is required'
     })
 })
+
+export const WarehouseSchema = z.object({
+    warehouse:z.string().min(4,{
+        message:"minimum of 4 characters required"
+    }),
+    email:z.string().email({
+        message:"email is required"
+    }),
+    phonenumber:z.string(),
+
+    country:z.string().min(3,{
+        message:"minimum of 3 characters required"
+    }),
+    city:z.string().min(3,{
+        message:"minimum of 3 characters required"
+    }),
+    
+    zipcode:z.string(),
+    
+})
