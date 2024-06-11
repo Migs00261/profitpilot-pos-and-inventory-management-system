@@ -1,4 +1,5 @@
 import React from "react";
+import { getAllWarehouseData } from "@/data/InventoryTableData";
 const columns = [
   {name: "Id", uid: "id"},
   {name: "WAREHOUSE", uid: "warehouse", sortable: true},
@@ -14,21 +15,25 @@ const statusOptions = [
   {name: "Outofstock", uid: "outofstock"},
 ];
 
-const users = [
-  {
-    id: 1,
-    warehouse: "warehouse one",
-    phone:"+2547836889",
-    country:"kenya",
-    email:"xyvielyons@gmail.com",
-    zipcode:"00232"
-    
+let users:any = [];
 
-  },
+const getdata = async()=>{
+  const data:any = await getAllWarehouseData()
+  users = [...data]
+
+
+}
+getdata()
+
+
+
+
+
   
- 
-  
-  
-];
+
+
+
+
+
 
 export {columns, users, statusOptions};

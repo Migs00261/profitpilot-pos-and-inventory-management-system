@@ -29,6 +29,7 @@ import {capitalize} from "./utils";
 import { sidebarinventorywarehousedrawertrigger } from "@/redux/slices/sidebarInventoryWarehouseDrawerSlice";
 import { useAppDispatch } from "@/redux/hooks/hooks";
 
+
 const statusColorMap: Record<string, ChipProps["color"]> = {
   instock: "success",
   outofstock: "danger",
