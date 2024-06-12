@@ -3,9 +3,8 @@ import dotenv from 'dotenv'
 import { connectDB } from "./config/db.js"
 import cors from 'cors'
 import {graphqlHTTP} from "express-graphql"
-import helmet from 'helmet'
 import xss from 'xss-clean'
-import schema from './Graphql/schema.js'
+import schema from "./Graphql/schema.js"
 
 const port = process.env.PORT || 5000;
 
@@ -21,7 +20,6 @@ const corsOptions = {
 }
 
 app.use(cors(corsOptions))
-app.use(helmet())
 app.use(xss())
 
 app.use('/graphql',graphqlHTTP({

@@ -32,7 +32,7 @@ const ProductSchema = new mongoose.Schema({
         
     },
     purchasePrice:{
-        type:String,
+        type:Number,
         required:[true,"purchasePrice is required field"],
         
     },
@@ -42,7 +42,7 @@ const ProductSchema = new mongoose.Schema({
         
     },
     warehouse:{
-        type:Number,
+        type:String,
         required:[true,"salePrice is required field"],
         
     },

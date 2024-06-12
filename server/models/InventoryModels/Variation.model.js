@@ -8,7 +8,7 @@ const VariationSchema = new mongoose.Schema({
     },
     values:{
         type:Array,
-        required:[true,"Image is required field"],
+        required:[true,"Values is required field"],
         
     },
    

@@ -9,10 +9,10 @@ const CategorySchema = new mongoose.Schema({
     
     description:{
         type:String,
-        required:[true,"Product is required field"],
+        required:[true,"Description is required field"],
         
     },
     
 })
 
-export default mongoose.model('Product',CategorySchema)
+export default mongoose.model('Category',CategorySchema)
