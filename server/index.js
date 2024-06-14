@@ -2,17 +2,20 @@ import express from "express"
 import dotenv from 'dotenv'
 import { connectDB } from "./config/db.js"
 import cors from 'cors'
-import {graphqlHTTP} from "express-graphql"
 import xss from 'xss-clean'
-import schema from "./Graphql/schema.js"
+import {ruruHTML} from 'ruru/server'
+import { createYoga } from "graphql-yoga"
+import { schema } from "./Graphql/schema.js"
 
 const port = process.env.PORT || 5000;
-
+let errorobj;
 dotenv.config()
 
 const app = express()
 
 connectDB()
+
+
 
 const corsOptions = {
     origin:'http://localhost:3000',
@@ -22,9 +25,23 @@ const corsOptions = {
 app.use(cors(corsOptions))
 app.use(xss())
 
-app.use('/graphql',graphqlHTTP({
+
+const yoga = createYoga({
   schema,
-  graphiql:process.env.NODE_ENV === 'development'
-}))
+  context:async()=>{
+    return {
+      
+      hello:errorobj
+    }
+  }
+})
+
+app.all('/graphql',yoga)
+
+app.get('/',(req,res)=>{
+  res.type('html');
+  res.end(ruruHTML({endpoint:'/graphql'}))
+})
+
 
 app.listen(port,() => console.log(`db connectio successful server running at port: ${port}`))
