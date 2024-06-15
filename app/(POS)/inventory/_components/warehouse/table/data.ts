@@ -1,5 +1,4 @@
 import React from "react";
-import { getAllWarehouseData } from "@/data/InventoryTableData";
 const columns = [
   {name: "Id", uid: "id"},
   {name: "WAREHOUSE", uid: "warehouse", sortable: true},
@@ -17,13 +16,6 @@ const statusOptions = [
 
 let users:any = [];
 
-const getdata = async()=>{
-  const data:any = await getAllWarehouseData()
-  users = [...data]
-
-
-}
-getdata()
 
 
 

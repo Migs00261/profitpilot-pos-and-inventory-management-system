@@ -3,6 +3,8 @@ import React from "react";
 import {Tabs, Tab, Chip} from "@nextui-org/react";
 
 function ThirdTab() {
+
+
   return (
     <div className="flex w-full flex-col bg-white p-2">
       <Tabs 

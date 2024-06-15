@@ -1,49 +1,37 @@
-"use server"
+"use client"
 import { WarehouseSchema } from "@/schemas"
 import * as z from "zod"
-import { db } from "@/lib/db"
-import { revalidatePath } from 'next/cache'
+import { useMutation } from "@apollo/client"
+import { useCurrentUser } from "@/hooks/use-current-user"
+import { ADD_WAREHOUSE } from "@/Graphql/Inventory/InventoryWarehouse"
 export const AddNewWarehouse = async (values:z.infer<typeof WarehouseSchema>)=>{
+    const user = useCurrentUser()
     const validatedFields = WarehouseSchema.safeParse(values)
-    
+    console.log(validatedFields)
+    const data = validatedFields.data
+   
+
+    const [createWarehouse] = useMutation(ADD_WAREHOUSE,{
+    variables:{
+        userId:user?.id,
+        warehouse:data?.warehouse,
+        email:data?.email,
+        phone:data?.phonenumber,
+        country:data?.country,
+        city:data?.city,
+        zipcode:data?.zipcode}
+    })
+
+
+    const result =createWarehouse()
+    console.log(result)
+
     if(!validatedFields.success){
         return {error:"Invalid fields"}
     }
-    const {warehouse,email,phonenumber,country,city,zipcode} = validatedFields.data
-    
+   
 
-    const findwarehouse = await db.warehouses.findFirst({
-       where:{
-        warehouse
-       }
-    })
-    console.log(findwarehouse?.warehouse)
-    if(findwarehouse?.warehouse == warehouse){
-        return{error:"duplicate warehouse name"}
-    }
-    
-    try{
-        
 
-        const addtowarehouse = await db.warehouses.create({
-            data:{
-                warehouse,
-                email,
-                phone:phonenumber,
-                country,
-                city,
-                zipcode
-            }
-        })
-        console.log(addtowarehouse)
-        revalidatePath('/inventory/warehouse')
-        return {success:"Warehouse added"}
 
-    }catch(error){
-        console.log(error)
-        return{error:"warehouse was not added"}
-
-    }
-    
 
 }

@@ -19,17 +19,27 @@ import { Button } from '@nextui-org/react'
 import { FormError } from "@/components/form-error";
 import { FormSuccess } from "@/components/form-success";
 import { useTransition } from 'react'
+import { useMutation } from "@apollo/client";
 import { MdInventory } from "react-icons/md";
+import { useCurrentUser } from "@/hooks/use-current-user";
 import { AddNewWarehouse } from "@/actions/addwarehouse";
 import { useAppDispatch,useAppSelector } from "@/redux/hooks/hooks";
 import { sidebarinventorywarehousedrawertrigger } from "@/redux/slices/sidebarInventoryWarehouseDrawerSlice";
+import { ADD_WAREHOUSE } from "@/Graphql/Inventory/InventoryWarehouse";
+
 function SidebarNavWarehouseDrawer() {
+    const user = useCurrentUser()
+    const [createWarehouse,{data,loading,error}] = useMutation(ADD_WAREHOUSE)
     const dispatch = useAppDispatch()
     const sidebarwarehousedrawerstate = useAppSelector((state)=>state.reducer.sidebarinventorywarehousedrawer.sidebardrawer)
     const [isOpen, setIsOpen] = useState(false);
     const [isPending,startTransition] = useTransition()
-  const [error,setError] = useState<string | undefined>("")
+  const [myerror,setError] = useState<string | undefined>("")
   const [success,setSuccess] = useState<string | undefined>("")
+
+  
+
+
   const form = useForm<z.infer<typeof WarehouseSchema>>({
     resolver:zodResolver(WarehouseSchema),
     defaultValues:{
@@ -45,20 +55,43 @@ function SidebarNavWarehouseDrawer() {
     },
     mode:"onChange"
   })
+
+  
   const {reset} = form
+
 
   const onSubmit = (values:z.infer<typeof WarehouseSchema>)=>{
     setSuccess("")
     setError("")
-    startTransition(()=>{
-      AddNewWarehouse(values).then((data:any)=>{
-        setError(data.error)
-        setSuccess(data.success)
-        if(data.success = "Warehouse added"){
-          reset()
-        }
+    startTransition(async()=>{
+      const mydata = WarehouseSchema.safeParse(values)
+      const sentdata = mydata?.data
+      try{
         
-      })
+        await createWarehouse({
+          variables:{
+            myuserId:user?.id,
+            mywarehouse:sentdata?.warehouse,
+            myemail:sentdata?.email,
+            myphonenumber:sentdata?.phonenumber,
+            mycountry:sentdata?.country,
+            mycity:sentdata?.city,
+            myzipcode:sentdata?.zipcode
+  
+          }
+        })
+        
+        
+
+
+        
+      }catch(err:any){
+        console.log(err?.message)
+
+      }
+      
+     
+     
 
     })
   
@@ -73,6 +106,14 @@ function SidebarNavWarehouseDrawer() {
     setSuccess("")
     setError("")
   };
+  if(loading){
+    return <h1>loading.....</h1>
+  }
+  if(data){
+    console.log(data)
+  }
+
+  
   return (
     <>
       <Drawer open={isOpen} onClose={handleClose} position="right" className="bg-[#FAFDFF]">
@@ -197,7 +238,7 @@ function SidebarNavWarehouseDrawer() {
             />
 
           </div>
-          <FormError message={error}></FormError>
+          <FormError message={myerror}></FormError>
           <FormSuccess message={success}></FormSuccess>
           <Button type='submit' isDisabled={isPending} isLoading={isPending} className='w-full bg-primarycolor text-white' radius='sm' >Add Warehouse</Button>
 

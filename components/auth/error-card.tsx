@@ -8,6 +8,7 @@ export default function ErrorCard() {
     headerLabel="Oops something went wrong"
     backButtonHref="/auth/login"
     backButtonLabel="Back to Login"
+    description=""
     >
         <div className="w-full items-center flex justify-center">
         <FaExclamationTriangle className="text-destructive"></FaExclamationTriangle>

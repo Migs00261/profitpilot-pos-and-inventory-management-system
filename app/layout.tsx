@@ -4,6 +4,7 @@ import { Providers } from "@/providers/providers";
 import "./globals.css";
 import {NextUIProvider} from "@nextui-org/react";
 import { Toaster } from "@/components/ui/toaster"
+import { ApolloWrapper } from "@/lib/ApolloWrapper";
 const roboto = Roboto({ 
   subsets: ["latin"],
   weight:['400','700','500'],
@@ -27,15 +28,21 @@ const session = await auth()
           <SessionProvider session={session}>
             <html lang="en">
             <body className={`${roboto.className} max-w-screen-xl mx-auto`}>
+            <ApolloWrapper>
             <Toaster/>
             <NextUIProvider>
             <Providers>
+              
               {children}
+              
+              
              </Providers> 
               </NextUIProvider>
+              </ApolloWrapper>
             </body>
             </html>
-          </SessionProvider>  
+          </SessionProvider>
+
 
     
     
