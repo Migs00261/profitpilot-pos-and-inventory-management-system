@@ -22,12 +22,12 @@ import { useTransition } from 'react'
 import { useMutation } from "@apollo/client";
 import { MdInventory } from "react-icons/md";
 import { useCurrentUser } from "@/hooks/use-current-user";
-import { AddNewWarehouse } from "@/actions/addwarehouse";
 import { useAppDispatch,useAppSelector } from "@/redux/hooks/hooks";
 import { sidebarinventorywarehousedrawertrigger } from "@/redux/slices/sidebarInventoryWarehouseDrawerSlice";
 import { ADD_WAREHOUSE } from "@/Graphql/Inventory/InventoryWarehouse";
 
 function SidebarNavWarehouseDrawer() {
+ 
     const user = useCurrentUser()
     const [createWarehouse,{data,loading,error}] = useMutation(ADD_WAREHOUSE)
     const dispatch = useAppDispatch()
@@ -36,11 +36,12 @@ function SidebarNavWarehouseDrawer() {
     const [isPending,startTransition] = useTransition()
   const [myerror,setError] = useState<string | undefined>("")
   const [success,setSuccess] = useState<string | undefined>("")
+ 
 
   
 
-
   const form = useForm<z.infer<typeof WarehouseSchema>>({
+
     resolver:zodResolver(WarehouseSchema),
     defaultValues:{
       warehouse:"",
@@ -80,13 +81,27 @@ function SidebarNavWarehouseDrawer() {
   
           }
         })
+          if(!loading){
+            reset()
+            dispatch(sidebarinventorywarehousedrawertrigger())
+           
+            setSuccess("warehouse created")
+            
+          
+          }
+          
+         
+        
+
+       
         
         
 
 
         
       }catch(err:any){
-        console.log(err?.message)
+
+        setError(err.message)
 
       }
       
@@ -106,12 +121,7 @@ function SidebarNavWarehouseDrawer() {
     setSuccess("")
     setError("")
   };
-  if(loading){
-    return <h1>loading.....</h1>
-  }
-  if(data){
-    console.log(data)
-  }
+  
 
   
   return (

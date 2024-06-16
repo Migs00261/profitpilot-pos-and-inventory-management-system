@@ -18,7 +18,7 @@ function makeClient() {
     // you can disable result caching here if you want to
     // (this does not work if you are rendering your page with `export const dynamic = "force-static"`)
     fetchOptions: { cache: "no-store" },
-    headers:{"authorization":"bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjZkYTJlY2I4NGNmOGFmODMyZTJiNWIiLCJpYXQiOjE3MTg0NjExNjR9.bBfDQ3GRZLkNgMVzm6rbnzE_kM9VUoohQE5PghxENZQ"}
+    headers:{"authorization":"bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjZlZjA5ODVlODc3MzY3YzE5YTNkYTIiLCJpYXQiOjE3MTg1NDY1ODR9.6bY0J37b155NNVxmUstdt9-P7jlWPfkyBAXZ6uzB54Y"}
     // you can override the default `fetchOptions` on a per query basis
     // via the `context` property on the options passed as a second argument
     // to an Apollo Client data fetching hook, e.g.:
@@ -31,7 +31,7 @@ function makeClient() {
     typePolicies:{
       Query:{
         fields:{
-          clients:{
+          warehouses:{
             merge(existing,incoming){
               return incoming;
             }

@@ -24,17 +24,20 @@ import {PlusIcon} from "./PlusIcon";
 import {VerticalDotsIcon} from "./VerticalDotsIcon";
 import { ChevronDownIcon } from "./ChevronDownIcon";
 import {SearchIcon} from "./SearchIcon";
-import {columns, users, statusOptions} from "./data";
+import {columns, statusOptions} from "./data";
 import {capitalize} from "./utils";
 import { sidebarinventorywarehousedrawertrigger } from "@/redux/slices/sidebarInventoryWarehouseDrawerSlice";
 import { useAppDispatch } from "@/redux/hooks/hooks";
-
+import { useCurrentUser } from "@/hooks/use-current-user";
+import { GET_WAREHOUSES } from "@/Graphql/Inventory/InventoryWarehouse";
+import { ReactGQLQuery } from "@/lib/reactquerycomponent";
+import { errorCodes } from "@apollo/client/invariantErrorCodes";
 
 const statusColorMap: Record<string, ChipProps["color"]> = {
   instock: "success",
   outofstock: "danger",
 };
-
+let users:any = []
 const INITIAL_VISIBLE_COLUMNS = ["id","warehouse","phone","email","zipcode","actions"];
 
 type User = typeof users[0];
@@ -45,6 +48,7 @@ export default function TableComponent() {
   const [visibleColumns, setVisibleColumns] = React.useState<Selection>(new Set(INITIAL_VISIBLE_COLUMNS));
   const [statusFilter, setStatusFilter] = React.useState<Selection>("all");
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  
   const [sortDescriptor, setSortDescriptor] = React.useState<SortDescriptor>({
     column: "currentstock",
     direction: "ascending",
@@ -53,6 +57,28 @@ export default function TableComponent() {
   function openDrawer(){
     dispatch(sidebarinventorywarehousedrawertrigger())
   }
+  
+  const currentUser = useCurrentUser()
+  
+  
+  
+  const {data,isLoading,error} = ReactGQLQuery('getWarehouses',GET_WAREHOUSES,{
+    userId:currentUser?.id
+  },{
+    refetchInterval:20000
+  })
+  const mydata:any = data
+  if(mydata){
+    const warehouseData = mydata?.warehouses
+  console.log(mydata,isLoading,error)
+    
+   if(!isLoading && !error){
+    users = [...warehouseData]
+   }
+
+
+  }
+  
 
 
   const [page, setPage] = React.useState(1);
@@ -296,44 +322,59 @@ export default function TableComponent() {
       </div>
     );
   }, [selectedKeys, items.length, page, pages, hasSearchFilter]);
+  
+ 
+  
+  return(
+    <div className="">
+     
+        <Table
+         isStriped
+         aria-label="Example table with custom cells, pagination and sorting"
+         isHeaderSticky
+         bottomContent={bottomContent}
+         bottomContentPlacement="outside"
+         classNames={{
+           wrapper: "max-h-[400px] w-full overflow-scroll",
+           
+         }}
+         selectedKeys={selectedKeys}
+         selectionMode="multiple"
+         sortDescriptor={sortDescriptor}
+         topContent={topContent}
+         topContentPlacement="outside"
+         onSelectionChange={setSelectedKeys}
+         onSortChange={setSortDescriptor}
+       >
+         <TableHeader columns={headerColumns}>
+           {(column) => (
+             <TableColumn
+               key={column.uid}
+               align={column.uid === "actions" ? "center" : "start"}
+               allowsSorting={column.sortable}
+             >
+               {column.name}
+             </TableColumn>
+           )}
+         </TableHeader>
+         <TableBody emptyContent={"No users found"} items={sortedItems}>
+           {(item) => (
+             <TableRow key={item.id}>
+               {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
+             </TableRow>
+           )}
+         </TableBody>
+       </Table>
 
-  return (
-    <Table
-      isStriped
-      aria-label="Example table with custom cells, pagination and sorting"
-      isHeaderSticky
-      bottomContent={bottomContent}
-      bottomContentPlacement="outside"
-      classNames={{
-        wrapper: "max-h-[400px] w-full overflow-scroll",
-        
-      }}
-      selectedKeys={selectedKeys}
-      selectionMode="multiple"
-      sortDescriptor={sortDescriptor}
-      topContent={topContent}
-      topContentPlacement="outside"
-      onSelectionChange={setSelectedKeys}
-      onSortChange={setSortDescriptor}
-    >
-      <TableHeader columns={headerColumns}>
-        {(column) => (
-          <TableColumn
-            key={column.uid}
-            align={column.uid === "actions" ? "center" : "start"}
-            allowsSorting={column.sortable}
-          >
-            {column.name}
-          </TableColumn>
-        )}
-      </TableHeader>
-      <TableBody emptyContent={"No users found"} items={sortedItems}>
-        {(item) => (
-          <TableRow key={item.id}>
-            {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
-          </TableRow>
-        )}
-      </TableBody>
-    </Table>
-  );
-}
+    </div>
+    
+     
+     )
+    }
+
+  
+
+  
+
+  
+
