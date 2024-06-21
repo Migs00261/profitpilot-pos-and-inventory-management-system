@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import { Providers } from "@/providers/providers";
 import "./globals.css";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {NextUIProvider} from "@nextui-org/react";
-import { Toaster } from "@/components/ui/toaster"
 import { ApolloWrapper } from "@/lib/ApolloWrapper";
 const roboto = Roboto({ 
   subsets: ["latin"],
@@ -28,8 +29,8 @@ const session = await auth()
           <SessionProvider session={session}>
             <html lang="en">
             <body className={`${roboto.className} max-w-screen-xl mx-auto`}>
+            <ToastContainer />
             <ApolloWrapper>
-            <Toaster/>
             <NextUIProvider>
             <Providers>
               

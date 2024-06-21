@@ -25,7 +25,7 @@ import { useCurrentUser } from "@/hooks/use-current-user";
 import { useAppDispatch,useAppSelector } from "@/redux/hooks/hooks";
 import { sidebarinventorywarehousedrawertrigger } from "@/redux/slices/sidebarInventoryWarehouseDrawerSlice";
 import { ADD_WAREHOUSE } from "@/Graphql/Inventory/InventoryWarehouse";
-
+import {toast} from "react-toastify"
 function SidebarNavWarehouseDrawer() {
  
     const user = useCurrentUser()
@@ -36,7 +36,6 @@ function SidebarNavWarehouseDrawer() {
     const [isPending,startTransition] = useTransition()
   const [myerror,setError] = useState<string | undefined>("")
   const [success,setSuccess] = useState<string | undefined>("")
- 
 
   
 
@@ -84,8 +83,8 @@ function SidebarNavWarehouseDrawer() {
           if(!loading){
             reset()
             dispatch(sidebarinventorywarehousedrawertrigger())
-           
-            setSuccess("warehouse created")
+            toast.success("warehouse created")
+            
             
           
           }
@@ -101,7 +100,8 @@ function SidebarNavWarehouseDrawer() {
         
       }catch(err:any){
 
-        setError(err.message)
+        setError("error creating warehouse")
+        toast.error("something went wrong")
 
       }
       
