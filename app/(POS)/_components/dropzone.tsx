@@ -1,16 +1,27 @@
 "use client";
 import { FileInput, Label } from "flowbite-react";
-import { useState } from "react";
+import { useState,useCallback, useEffect } from "react";
 import { storage,ID } from "@/app/appWrite";
 import {Progress} from "@nextui-org/react";
 import Image from "next/image";
 import { toast } from "react-toastify";
+import { useAppSelector } from "@/redux/hooks/hooks";
 function Dropzone({onUrlSend}:any) {
   const [progress,setProgress] = useState<any>(null)
   const [fileUrl,setFileUrl] = useState<any>(null)
-  
+  const sidebarbavbrandstate = useAppSelector((state)=>state.reducer.sidebarnavbrand.sidebarnav)
+  console.log(sidebarbavbrandstate)
   onUrlSend(fileUrl)
 
+  useEffect(()=>{
+    if(!sidebarbavbrandstate){
+      setFileUrl(null)
+    }
+
+  },[sidebarbavbrandstate])
+
+
+ 
 
   async function handleFileInput(e:any){
      e.preventDefault()
@@ -26,14 +37,13 @@ function Dropzone({onUrlSend}:any) {
          
 
       })
-      console.log(sendToStorage.$id)
+      
       setProgress(true)
 
       if(sendToStorage){
         setProgress(false)
         toast.success('image uploaded successfully')
         const getFilePreview = await storage.getFilePreview('6676cf32002d4f4a870e',sendToStorage.$id)
-        console.log(getFilePreview)
         setFileUrl(getFilePreview.href)
      
 
