@@ -11,13 +11,13 @@ html,body,:root{
   border-width: 0;
 
 }
-input,Input{
+input,Input,textarea{
   border-width: 0;
 }
 [type="text"],select{
   border-width: 0;
 }
-[type="text"]:focus ,select:focus{
+[type="text"]:focus ,select:focus,textarea:focus{
   --tw-ring-color: transparent;
 
 }
