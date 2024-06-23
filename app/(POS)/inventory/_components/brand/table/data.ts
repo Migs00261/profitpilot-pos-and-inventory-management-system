@@ -12,33 +12,5 @@ const statusOptions = [
   {name: "Outofstock", uid: "outofstock"},
 ];
 
-const users = [
-  {
-    id: 1,
-    brand: "Television",
-    image: "image1",
-    description:"an expensive unique television",
-    
 
-  },
-  {
-    id: 2,
-    brand: "Television",
-    image: "image1",
-    description:"an expensive unique television",
-    
-
-  },
-  {
-    id: 3,
-    brand: "Television",
-    image: "image1",
-    description:"an expensive unique television",
-    
-
-  },
-  
-  
-];
-
-export {columns, users, statusOptions};
+export {columns,statusOptions};

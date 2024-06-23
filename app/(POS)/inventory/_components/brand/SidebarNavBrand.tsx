@@ -133,7 +133,7 @@ function SidebarNavBrand() {
         <Drawer.Items>
           <div className="">
             <div className="">
-              <Dropzone onUrlSend={handleReceivedUrl}></Dropzone>
+              <Dropzone name="brand" onUrlSend={handleReceivedUrl}></Dropzone>
             </div>
             <div className="">
             <Form {...form}>

@@ -26,20 +26,26 @@ import {PlusIcon} from "./PlusIcon";
 import {VerticalDotsIcon} from "./VerticalDotsIcon";
 import { ChevronDownIcon } from "./ChevronDownIcon";
 import {SearchIcon} from "./SearchIcon";
-import {columns, users, statusOptions} from "./data";
+import {columns,statusOptions} from "./data";
 import {capitalize} from "./utils";
-
+import { ReactGQLQuery } from "@/lib/reactquerycomponent";
+import { GET_BRANDS } from "@/Graphql/Inventory/InventoryBrands";
+import { useCurrentUser } from "@/hooks/use-current-user";
+import Image from "next/image";
+import {toast} from "react-toastify"
 
 const statusColorMap: Record<string, ChipProps["color"]> = {
   instock: "success",
   outofstock: "danger",
 };
+let users:any = []
 
-const INITIAL_VISIBLE_COLUMNS = ["id","brand","image","description"];
+const INITIAL_VISIBLE_COLUMNS = ["brand","image","description","actions"];
 
 type User = typeof users[0];
 
 export default function TableComponent() {
+  const currentUser = useCurrentUser()
   const [filterValue, setFilterValue] = React.useState("");
   const [selectedKeys, setSelectedKeys] = React.useState<Selection>(new Set([]));
   const [visibleColumns, setVisibleColumns] = React.useState<Selection>(new Set(INITIAL_VISIBLE_COLUMNS));
@@ -52,6 +58,27 @@ export default function TableComponent() {
   const dispatch = useAppDispatch()
   function openDrawer(){
     dispatch(sidebarnavbrandtrigger())
+  }
+  const {data,isLoading,error} = ReactGQLQuery('getInventoryBrands',GET_BRANDS,{
+    myuserId:currentUser?.id
+  },{
+    refetchInterval:20000
+  })
+
+
+  const mydata:any = data
+  if(mydata){
+    const brandsData = mydata?.brands
+  
+    
+   if(!isLoading && !error){
+    users = [...brandsData]
+   }
+   if(error){
+    toast.error("error loading available brands")
+
+   }
+
   }
   const [page, setPage] = React.useState(1);
 
@@ -103,16 +130,13 @@ export default function TableComponent() {
     const cellValue = user[columnKey as keyof User];
 
     switch (columnKey) {
-      // case "name":
-      //   return (
-      //     <User
-      //       avatarProps={{radius: "lg", src: user.avatar}}
-      //       description={user.email}
-      //       name={cellValue}
-      //     >
-      //       {user.email}
-      //     </User>
-      //   );
+      case "image":
+        return (
+          <div className="w-[80px] h-[80px] flex justify-center items-center">
+            <Image src={cellValue} width={500} height={500} alt="brand image"></Image>
+          </div>
+          
+        );
       case "role":
         return (
           <div className="flex flex-col">
@@ -325,7 +349,7 @@ export default function TableComponent() {
           </TableColumn>
         )}
       </TableHeader>
-      <TableBody emptyContent={"No users found"} items={sortedItems}>
+      <TableBody emptyContent={"No brands found"} items={sortedItems}>
         {(item) => (
           <TableRow key={item.id}>
             {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}

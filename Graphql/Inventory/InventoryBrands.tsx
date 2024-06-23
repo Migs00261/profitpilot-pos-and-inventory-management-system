@@ -10,3 +10,16 @@ mutation CREATEBRAND($myuserId:String!,$mybrand:String!,$myimage:String!,$mydesc
         description
   }
 }`
+
+export const GET_BRANDS = gql/* GraphQL */`
+query GETBRANDS($myuserId:String!){
+    brands(userId:$myuserId){
+        id
+        userId
+        brand
+        image
+        description
+    }
+}
+
+`

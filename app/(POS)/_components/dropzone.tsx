@@ -6,11 +6,10 @@ import {Progress} from "@nextui-org/react";
 import Image from "next/image";
 import { toast } from "react-toastify";
 import { useAppSelector } from "@/redux/hooks/hooks";
-function Dropzone({onUrlSend}:any) {
+function Dropzone({onUrlSend,name}:any) {
   const [progress,setProgress] = useState<any>(null)
   const [fileUrl,setFileUrl] = useState<any>(null)
   const sidebarbavbrandstate = useAppSelector((state)=>state.reducer.sidebarnavbrand.sidebarnav)
-  console.log(sidebarbavbrandstate)
   onUrlSend(fileUrl)
 
   useEffect(()=>{
@@ -89,7 +88,7 @@ function Dropzone({onUrlSend}:any) {
             />
             </svg>
               <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                <span className="font-semibold">Click to upload</span> or drag and drop
+                <span className="font-semibold">{`Click to upload ${name}`}</span>
               </p>
               <p className="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
           </div>}
