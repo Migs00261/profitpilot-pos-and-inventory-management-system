@@ -11,31 +11,5 @@ const statusOptions = [
   {name: "Outofstock", uid: "outofstock"},
 ];
 
-const users = [
-  {
-    id: 1,
-    category: "electronics",
-    description:"electronic appliances",
-    
 
-  },
-  {
-    id: 2,
-    category: "electronics",
-    description:"electronic appliances",
-    
-
-  },
-  {
-    id: 3,
-    category: "electronics",
-    description:"electronic appliances",
-    
-
-  },
- 
-  
-  
-];
-
-export {columns, users, statusOptions};
+export {columns, statusOptions};

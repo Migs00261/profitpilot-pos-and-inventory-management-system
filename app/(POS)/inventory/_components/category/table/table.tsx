@@ -24,22 +24,26 @@ import {PlusIcon} from "./PlusIcon";
 import {VerticalDotsIcon} from "./VerticalDotsIcon";
 import { ChevronDownIcon } from "./ChevronDownIcon";
 import {SearchIcon} from "./SearchIcon";
-import {columns, users, statusOptions} from "./data";
+import {columns,statusOptions} from "./data";
 import {capitalize} from "./utils";
 import { useAppDispatch } from "@/redux/hooks/hooks";
 import { sidebarinventorycategorydrawertrigger } from "@/redux/slices/sidebarInventoryCategoryDrawerSlice";
-
-
+import { GET_CATEGORIES } from "@/Graphql/Inventory/InventoryCategory";
+import { useCurrentUser } from "@/hooks/use-current-user";
+import { ReactGQLQuery } from "@/lib/reactquerycomponent";
+import {toast} from "react-toastify"
 const statusColorMap: Record<string, ChipProps["color"]> = {
   instock: "success",
   outofstock: "danger",
 };
 
-const INITIAL_VISIBLE_COLUMNS = ["id","category","image","description"];
+let users:any = []
+const INITIAL_VISIBLE_COLUMNS = ["category","description"];
 
 type User = typeof users[0];
 
 export default function TableComponent() {
+  const currentUser = useCurrentUser()
   const [filterValue, setFilterValue] = React.useState("");
   const [selectedKeys, setSelectedKeys] = React.useState<Selection>(new Set([]));
   const [visibleColumns, setVisibleColumns] = React.useState<Selection>(new Set(INITIAL_VISIBLE_COLUMNS));
@@ -52,6 +56,27 @@ export default function TableComponent() {
   const dispatch = useAppDispatch()
   function openDrawer(){
     dispatch(sidebarinventorycategorydrawertrigger())
+  }
+  const {data,isLoading,error} = ReactGQLQuery('getInventoryCategories',GET_CATEGORIES,{
+    myuserId:currentUser?.id
+  },{
+    refetchInterval:20000
+  })
+
+
+  const mydata:any = data
+  if(mydata){
+    const categoryData = mydata?.categories
+  
+    
+   if(!isLoading && !error){
+    users = [...categoryData]
+   }
+   if(error){
+    toast.error("error loading available brands")
+
+   }
+
   }
 
   const [page, setPage] = React.useState(1);

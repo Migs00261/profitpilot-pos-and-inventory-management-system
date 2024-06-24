@@ -95,3 +95,11 @@ export const BrandsSchema = z.object({
         message:"minimum of 10 characters required"
     })
 })
+export const CategorySchema = z.object({
+    category:z.string().min(3,{
+        message:"minimum of 3 characters required"
+    }),
+    description:z.string().min(10,{
+        message:"minimum of 10 characters required"
+    })
+})
