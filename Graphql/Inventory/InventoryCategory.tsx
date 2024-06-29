@@ -9,6 +9,14 @@ mutation CREATECATEGORY($myuserId:String!,$mycategory:String!,$mydescription:Str
         description
   }
 }`
+export const DELETE_CATEGORY = gql/* GraphQL */`
+mutation DELETECATEGORY($mycategoryId:String!){
+    deleteCategory(id:$mycategoryId){
+        status
+        message
+    
+  }
+}`
 
 export const GET_CATEGORIES = gql/* GraphQL */`
 query GETCATEGORIES($myuserId:String!){

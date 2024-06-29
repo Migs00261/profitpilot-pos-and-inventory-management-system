@@ -21,6 +21,7 @@ import {
   SortDescriptor
 } from "@nextui-org/react";
 import {PlusIcon} from "./PlusIcon";
+import { MdModeEditOutline } from "react-icons/md";
 import {VerticalDotsIcon} from "./VerticalDotsIcon";
 import { ChevronDownIcon } from "./ChevronDownIcon";
 import {SearchIcon} from "./SearchIcon";
@@ -32,13 +33,19 @@ import { GET_CATEGORIES } from "@/Graphql/Inventory/InventoryCategory";
 import { useCurrentUser } from "@/hooks/use-current-user";
 import { ReactGQLQuery } from "@/lib/reactquerycomponent";
 import {toast} from "react-toastify"
+import { MdDelete } from "react-icons/md";
+import {useDisclosure} from "@nextui-org/react";
+import CategoryDeleteModal from "./CategoryDeleteModal";
+
+
+
 const statusColorMap: Record<string, ChipProps["color"]> = {
   instock: "success",
   outofstock: "danger",
 };
 
 let users:any = []
-const INITIAL_VISIBLE_COLUMNS = ["category","description"];
+const INITIAL_VISIBLE_COLUMNS = ["category","description","actions"];
 
 type User = typeof users[0];
 
@@ -49,15 +56,19 @@ export default function TableComponent() {
   const [visibleColumns, setVisibleColumns] = React.useState<Selection>(new Set(INITIAL_VISIBLE_COLUMNS));
   const [statusFilter, setStatusFilter] = React.useState<Selection>("all");
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowId,setRowId] = React.useState("")
+  const {isOpen, onOpen, onOpenChange} = useDisclosure();
   const [sortDescriptor, setSortDescriptor] = React.useState<SortDescriptor>({
     column: "currentstock",
     direction: "ascending",
   });
+  
+
   const dispatch = useAppDispatch()
   function openDrawer(){
     dispatch(sidebarinventorycategorydrawertrigger())
   }
-  const {data,isLoading,error} = ReactGQLQuery('getInventoryCategories',GET_CATEGORIES,{
+  const {data,isLoading,error:errorscategory} = ReactGQLQuery('getInventoryCategories',GET_CATEGORIES,{
     myuserId:currentUser?.id
   },{
     refetchInterval:20000
@@ -69,15 +80,19 @@ export default function TableComponent() {
     const categoryData = mydata?.categories
   
     
-   if(!isLoading && !error){
+   if(!isLoading && !errorscategory){
     users = [...categoryData]
    }
-   if(error){
-    toast.error("error loading available brands")
+   if(errorscategory){
+    toast.error("error loading available categories")
 
    }
 
   }
+function DeleteUserFunction(id:string){
+ setRowId(id)
+}
+
 
   const [page, setPage] = React.useState(1);
 
@@ -127,7 +142,9 @@ export default function TableComponent() {
 
   const renderCell = React.useCallback((user: User, columnKey: React.Key) => {
     const cellValue = user[columnKey as keyof User];
+    console.log(user)
 
+    
     switch (columnKey) {
       // case "name":
       //   return (
@@ -155,6 +172,7 @@ export default function TableComponent() {
       case "actions":
         return (
           <div className="relative flex justify-end items-center gap-2">
+       
             <Dropdown>
               <DropdownTrigger>
                 <Button isIconOnly size="sm" variant="light">
@@ -162,11 +180,19 @@ export default function TableComponent() {
                 </Button>
               </DropdownTrigger>
               <DropdownMenu>
-                <DropdownItem>View</DropdownItem>
-                <DropdownItem>Edit</DropdownItem>
-                <DropdownItem>Delete</DropdownItem>
+                <DropdownItem ><MdModeEditOutline className="mr-2 inline-flex"></MdModeEditOutline>Edit</DropdownItem>
+                <DropdownItem onClick={()=>{
+                  onOpen()
+                  DeleteUserFunction(user.id)
+                  
+                  }}><MdDelete className="mr-2 inline-flex"></MdDelete>Delete</DropdownItem>
               </DropdownMenu>
             </Dropdown>
+           
+            
+
+          
+            
           </div>
         );
       default:
@@ -322,7 +348,8 @@ export default function TableComponent() {
   }, [selectedKeys, items.length, page, pages, hasSearchFilter]);
 
   return (
-    <Table
+   <div className="">
+     <Table
       isStriped
       aria-label="Example table with custom cells, pagination and sorting"
       isHeaderSticky
@@ -359,5 +386,13 @@ export default function TableComponent() {
         )}
       </TableBody>
     </Table>
+    <div className="">
+      <CategoryDeleteModal  statusIsOpen={isOpen} statusOnOpenChange={onOpenChange} RowId={rowId} description="category"></CategoryDeleteModal>
+      
+    </div>
+
+   </div>
+   
+
   );
 }

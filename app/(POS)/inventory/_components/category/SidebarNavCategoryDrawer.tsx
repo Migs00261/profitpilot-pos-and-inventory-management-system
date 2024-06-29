@@ -23,14 +23,17 @@ import { FormError } from "@/components/form-error";
 import { FormSuccess } from "@/components/form-success";
 import { useTransition } from 'react'
 import { useMutation } from "@apollo/client";
-import { BrandsSchema } from "@/schemas";
 import { toast } from "react-toastify";
 import { CREATE_CATEGORY } from "@/Graphql/Inventory/InventoryCategory";
 import { CategorySchema } from "@/schemas";
 import { FiPlus } from "react-icons/fi";
+import { useQueryClient } from 'react-query';
+
 function SidebarNavBrand() {
   const user:any = useCurrentUser()
     const dispatch = useAppDispatch()
+    const queryClient = useQueryClient()
+
     const sidebarbarcategorynavstate = useAppSelector((state)=>state.reducer.sidebarinventorycategorydrawer.sidebardrawer)
     const [isOpen, setIsOpen] = useState(false);
     const [isPending,startTransition] = useTransition()
@@ -82,7 +85,8 @@ function SidebarNavBrand() {
               reset()
               dispatch(sidebarinventorycategorydrawertrigger())
               toast.success("category created")
-              
+              queryClient.invalidateQueries('getInventoryCategories')
+
               
             
             }
