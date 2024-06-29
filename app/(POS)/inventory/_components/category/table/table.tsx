@@ -57,6 +57,7 @@ export default function TableComponent() {
   const [statusFilter, setStatusFilter] = React.useState<Selection>("all");
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [rowId,setRowId] = React.useState("")
+  const [deleteModalDesc,setDeleteModalDesc] = React.useState("")
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
   const [sortDescriptor, setSortDescriptor] = React.useState<SortDescriptor>({
     column: "currentstock",
@@ -89,7 +90,8 @@ export default function TableComponent() {
    }
 
   }
-function DeleteUserFunction(id:string){
+function DeleteUserFunction(id:string,desc:string){
+setDeleteModalDesc(desc)
  setRowId(id)
 }
 
@@ -180,10 +182,12 @@ function DeleteUserFunction(id:string){
                 </Button>
               </DropdownTrigger>
               <DropdownMenu>
-                <DropdownItem ><MdModeEditOutline className="mr-2 inline-flex"></MdModeEditOutline>Edit</DropdownItem>
+                <DropdownItem><MdModeEditOutline className="mr-2 inline-flex"></MdModeEditOutline>Edit</DropdownItem>
+                
+                
                 <DropdownItem onClick={()=>{
                   onOpen()
-                  DeleteUserFunction(user.id)
+                  DeleteUserFunction(user.id,user.category)
                   
                   }}><MdDelete className="mr-2 inline-flex"></MdDelete>Delete</DropdownItem>
               </DropdownMenu>
@@ -387,7 +391,7 @@ function DeleteUserFunction(id:string){
       </TableBody>
     </Table>
     <div className="">
-      <CategoryDeleteModal  statusIsOpen={isOpen} statusOnOpenChange={onOpenChange} RowId={rowId} description="category"></CategoryDeleteModal>
+      <CategoryDeleteModal desc={deleteModalDesc} statusIsOpen={isOpen} statusOnOpenChange={onOpenChange} RowId={rowId} description="category"></CategoryDeleteModal>
       
     </div>
 

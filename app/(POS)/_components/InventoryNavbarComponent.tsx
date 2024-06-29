@@ -19,7 +19,7 @@ export default function InventoryNavbarComponent({path}:InventoryNav) {
     }
    
   return (
-    <div className='flex md:flex-row md:justify-between md:items-center bg-white p-[8px] flex-col gap-2 md:gap-0'>
+    <div className='flex md:flex-row md:justify-between md:items-center bg-white p-[8px] gap-2 md:gap-0 justify-between'>
 
         <div className="flex items-center justify-center space-x-4" >
             <div className="">

@@ -29,7 +29,7 @@ const session = await auth()
           <SessionProvider session={session}>
             <html lang="en">
             <body className={`${roboto.className} max-w-screen-xl mx-auto`}>
-            <ToastContainer />
+            <ToastContainer stacked />
             <ApolloWrapper>
             <NextUIProvider>
             <Providers>

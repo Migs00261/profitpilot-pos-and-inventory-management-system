@@ -6,7 +6,8 @@ import { useMutation } from "@apollo/client";
 import { DELETE_CATEGORY } from '@/Graphql/Inventory/InventoryCategory';
 import {toast} from "react-toastify"
 import { useQueryClient } from 'react-query';
-function CategoryDeleteModal({statusOnOpenChange,statusIsOpen,RowId,description,modal}:any) {
+
+function CategoryDeleteModal({desc,statusOnOpenChange,statusIsOpen,RowId,description,modal}:any) {
   const [deleteTheCategory,{data,loading,error:categoryerror}] = useMutation(DELETE_CATEGORY)
   const queryClient = useQueryClient()
 
@@ -44,7 +45,7 @@ function CategoryDeleteModal({statusOnOpenChange,statusIsOpen,RowId,description,
                 <>
                   <ModalHeader className="flex flex-col gap-1">Delete Category</ModalHeader>
                   <ModalBody>
-                   <p>{`Are you sure you want to delete the selected ${description}`}</p>
+                   <p>{`Are you sure you want to delete the selected ${description} (******${desc}******)`}</p>
                   </ModalBody>
                   <ModalFooter>
                     <Button color="danger" variant="light" onClick={()=>{
