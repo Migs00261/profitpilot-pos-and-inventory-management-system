@@ -2,10 +2,10 @@ import React from "react";
 const columns = [
   {name: "Id", uid: "id"},
   {name: "UNIT", uid: "unit", sortable: true},
-  {name: "BASE UNIT", uid: "baseunit", sortable: true},
-  {name: "SHORT NAME", uid: "shortname", sortable: true},
+  {name: "BASE UNIT", uid: "baseUnit", sortable: true},
+  {name: "SHORT NAME", uid: "shortName", sortable: true},
   {name: "OPERATOR", uid: "operator", sortable: true},
-  {name: "OPERATOR VALUE", uid: "operatorvalue", sortable: true},
+  {name: "OPERATOR VALUE", uid: "operatorValue", sortable: true},
   {name: "ACTION", uid: "actions"},
 ];
 
@@ -14,32 +14,6 @@ const statusOptions = [
   {name: "Outofstock", uid: "outofstock"},
 ];
 
-const users = [
-  {
-    id: 1,
-    baseunit:"kilogram",
-    unit:"Grams",
-    shortname:"g",
-    operator:"/",
-    operatorvalue:"1000"
-    
 
-  },
-  {
-    id: 2,
-    baseunit:"kilogram",
-    unit:"Grams",
-    shortname:"g",
-    operator:"/",
-    operatorvalue:"1000"
-    
 
-  },
-  
-  
- 
-  
-  
-];
-
-export {columns, users, statusOptions};
+export {columns,statusOptions};

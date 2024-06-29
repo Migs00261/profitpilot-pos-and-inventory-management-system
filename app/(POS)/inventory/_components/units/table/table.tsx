@@ -24,17 +24,21 @@ import {PlusIcon} from "./PlusIcon";
 import {VerticalDotsIcon} from "./VerticalDotsIcon";
 import { ChevronDownIcon } from "./ChevronDownIcon";
 import {SearchIcon} from "./SearchIcon";
-import {columns, users, statusOptions} from "./data";
+import {columns,statusOptions} from "./data";
 import {capitalize} from "./utils";
 import { useAppDispatch } from "@/redux/hooks/hooks";
 import { sidebarinventoryunitsdrawertrigger } from "@/redux/slices/sidebarInventoryUnitsDrawerSlice";
+import { ReactGQLQuery } from "@/lib/reactquerycomponent";
+import { useCurrentUser } from "@/hooks/use-current-user";
+import { GET_UNITS } from "@/Graphql/Inventory/InventoryUnits";
 
 const statusColorMap: Record<string, ChipProps["color"]> = {
   instock: "success",
   outofstock: "danger",
 };
+let users:any = []
 
-const INITIAL_VISIBLE_COLUMNS = ["id","unit","baseunit","shortname","operator","operatorvalue","actions"];
+const INITIAL_VISIBLE_COLUMNS = ["unit","baseUnit","shortName","operator","operatorValue","actions"];
 
 type User = typeof users[0];
 
@@ -51,6 +55,27 @@ export default function TableComponent() {
   const dispatch = useAppDispatch()
   function openDrawer(){
     dispatch(sidebarinventoryunitsdrawertrigger())
+  }
+
+  const currentUser = useCurrentUser()
+  
+  
+  
+  const {data,isLoading,error} = ReactGQLQuery('getUnits',GET_UNITS,{
+    userId:currentUser?.id
+  },{
+    refetchInterval:20000
+  })
+  const mydata:any = data
+  if(mydata){
+    const unitData = mydata?.units
+  console.log(mydata,isLoading,error)
+    
+   if(!isLoading && !error){
+    users = [...unitData]
+   }
+
+
   }
 
   const [page, setPage] = React.useState(1);

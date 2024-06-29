@@ -36,13 +36,7 @@ export default function page() {
         
         </div>
 
-        <div className="w-full h-full">
-         
-            <Button onClick={()=>router.push("/inventory/variants")} className='w-full h-full bg-white text-xl hover:bg-custom-gradient hover:text-white font-bold text-coolGray600'>
-            Add/View Variants
-            </Button>
-          
-        </div>
+        
 
         <div className="w-full h-full">
           

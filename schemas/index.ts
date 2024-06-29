@@ -103,3 +103,10 @@ export const CategorySchema = z.object({
         message:"minimum of 10 characters required"
     })
 })
+export const UnitSchema = z.object({
+        unit:z.string(),
+        shortName:z.string(),
+        baseUnit:z.string(),
+        operator:z.string(),
+        operatorValue:z.string()
+})
