@@ -23,7 +23,7 @@ import { useTransition } from 'react'
 import { useMutation } from "@apollo/client";
 import { toast } from "react-toastify";
 import { UPDATE_CATEGORY } from '@/Graphql/Inventory/InventoryCategory';
-import { CategorySchema } from "@/schemas";
+import { CategoryEditSchema } from '@/schemas/InventoryEditSchemas';
 import { useQueryClient } from 'react-query';
 export default function CategoryEditModal({userDetails,isOpen,onOpenChange}:any) {
   const user:any = useCurrentUser()
@@ -38,9 +38,9 @@ export default function CategoryEditModal({userDetails,isOpen,onOpenChange}:any)
   
     
   
-    const form = useForm<z.infer<typeof CategorySchema>>({
+    const form = useForm<z.infer<typeof CategoryEditSchema>>({
   
-      resolver:zodResolver(CategorySchema),
+      resolver:zodResolver(CategoryEditSchema),
       defaultValues:{
         category:"",
         description:"",
@@ -56,11 +56,11 @@ export default function CategoryEditModal({userDetails,isOpen,onOpenChange}:any)
     const {reset} = form
   
   
-    const onSubmit = (values:z.infer<typeof CategorySchema>)=>{
+    const onSubmit = (values:z.infer<typeof CategoryEditSchema>)=>{
       setSuccess("")
       setError("")
       startTransition(async()=>{
-        const mydata = CategorySchema.safeParse(values)
+        const mydata = CategoryEditSchema.safeParse(values)
         const sentdata = mydata?.data
 
         try{
