@@ -31,6 +31,12 @@ import { useAppDispatch } from "@/redux/hooks/hooks";
 import { useCurrentUser } from "@/hooks/use-current-user";
 import { GET_WAREHOUSES } from "@/Graphql/Inventory/InventoryWarehouse";
 import { ReactGQLQuery } from "@/lib/reactquerycomponent";
+import { MdDelete } from "react-icons/md";
+import { MdModeEditOutline } from "react-icons/md";
+import DeleteRowModal from "@/app/(POS)/_components/DeleteRowModal";
+import {useDisclosure} from "@nextui-org/react";
+import { DELETE_WAREHOUSE } from "@/Graphql/Inventory/InventoryWarehouse";
+import { toast } from "react-toastify";
 
 
 const statusColorMap: Record<string, ChipProps["color"]> = {
@@ -48,6 +54,11 @@ export default function TableComponent() {
   const [visibleColumns, setVisibleColumns] = React.useState<Selection>(new Set(INITIAL_VISIBLE_COLUMNS));
   const [statusFilter, setStatusFilter] = React.useState<Selection>("all");
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const {isOpen, onOpen, onOpenChange} = useDisclosure();
+  const [warehouseData,setWarehouseData] = React.useState();
+  const [warehouseId,setWarehouseId] = React.useState();
+  const [warehouseName,setWarehouseName] = React.useState();
+ 
   
   const [sortDescriptor, setSortDescriptor] = React.useState<SortDescriptor>({
     column: "currentstock",
@@ -56,6 +67,10 @@ export default function TableComponent() {
   const dispatch = useAppDispatch()
   function openDrawer(){
     dispatch(sidebarinventorywarehousedrawertrigger())
+  }
+  function getWarehouseData(warehouseId:any,WarehouseName:any){
+    setWarehouseId(warehouseId)
+    setWarehouseName(WarehouseName)
   }
   
   const currentUser = useCurrentUser()
@@ -70,13 +85,16 @@ export default function TableComponent() {
   const mydata:any = data
   if(mydata){
     const warehouseData = mydata?.warehouses
-  console.log(mydata,isLoading,error)
     
    if(!isLoading && !error){
     users = [...warehouseData]
    }
+   
 
 
+  }
+  if(error){
+    toast.error("Error fetching warehouses")
   }
   
 
@@ -164,9 +182,11 @@ export default function TableComponent() {
                 </Button>
               </DropdownTrigger>
               <DropdownMenu>
-                <DropdownItem>View</DropdownItem>
-                <DropdownItem>Edit</DropdownItem>
-                <DropdownItem>Delete</DropdownItem>
+                <DropdownItem><MdModeEditOutline className="mr-2 inline-flex"></MdModeEditOutline>Edit</DropdownItem>
+                <DropdownItem onClick={()=>{
+                  onOpen()
+                  getWarehouseData(user.id,user.warehouse)
+                }}><MdDelete className="mr-2 inline-flex"></MdDelete>Delete</DropdownItem>
               </DropdownMenu>
             </Dropdown>
           </div>
@@ -357,7 +377,7 @@ export default function TableComponent() {
              </TableColumn>
            )}
          </TableHeader>
-         <TableBody emptyContent={"No users found"} items={sortedItems}>
+         <TableBody emptyContent={"No warehouses found"} items={sortedItems}>
            {(item) => (
              <TableRow key={item.id}>
                {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
@@ -365,6 +385,11 @@ export default function TableComponent() {
            )}
          </TableBody>
        </Table>
+
+       <div className="">
+        <DeleteRowModal desc="warehouse" Id={warehouseId} Name={warehouseName} isOpen={isOpen} onOpenChange={onOpenChange} graphqlquery={DELETE_WAREHOUSE} queryInvalidationName="getWarehouses"></DeleteRowModal>
+       
+       </div>
 
     </div>
     

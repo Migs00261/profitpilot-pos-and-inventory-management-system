@@ -65,13 +65,7 @@ function Navbar() {
             </div>
             
         </MenuItem>
-        <MenuItem className={`${pathname == '/inventory/variants' ?' bg-blue-100 font-medium rounded m-[8px] text-coolGray800 ':'text-coolGray600'}`}  component={<Link href="/inventory/variants" />}>
-            <div className="flex flex-row space-x-2 items-center w-full">
-                <div className="">{pathname == '/inventory/variants' && <Dot></Dot>}</div>
-                <div className='text-[16px] '>Variants</div>
-            </div>
-            
-        </MenuItem>
+       
         <MenuItem className={`${pathname == '/inventory/units' ?' bg-blue-100 rounded font-medium m-[8px] text-coolGray800 ':'text-coolGray600'}`}  component={<Link href="/inventory/units" />}>
             <div className="flex flex-row space-x-2 items-center w-full">
                 <div className="">{pathname == '/inventory/units' && <Dot></Dot>}</div>

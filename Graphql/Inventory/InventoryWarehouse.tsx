@@ -30,6 +30,15 @@ mutation UPDATEWAREHOUSE($mywarehouseId:String!,$myuserId:String!,$mywarehouse:S
 }
 
 `
+export const DELETE_WAREHOUSE = gql/* GraphQL */`
+mutation DELETEWAREHOUSE($myId:String!){
+    deleteWarehouse(id:$myId){
+    status
+    message
+  }
+}
+
+`
 export const GET_WAREHOUSES = gql/* GraphQL */`
 query WAREHOUSES($userId:String!){
     warehouses(userid:$userId){

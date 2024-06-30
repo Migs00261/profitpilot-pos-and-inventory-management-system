@@ -62,7 +62,7 @@ export default function CategoryEditModal({userDetails,isOpen,onOpenChange}:any)
       startTransition(async()=>{
         const mydata = CategorySchema.safeParse(values)
         const sentdata = mydata?.data
-        console.log(sentdata)
+
         try{
           
           await updateCategory({

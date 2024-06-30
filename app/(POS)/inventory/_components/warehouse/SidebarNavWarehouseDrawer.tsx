@@ -26,6 +26,8 @@ import { useAppDispatch,useAppSelector } from "@/redux/hooks/hooks";
 import { sidebarinventorywarehousedrawertrigger } from "@/redux/slices/sidebarInventoryWarehouseDrawerSlice";
 import { ADD_WAREHOUSE } from "@/Graphql/Inventory/InventoryWarehouse";
 import {toast} from "react-toastify"
+import { useQueryClient } from 'react-query';
+
 function SidebarNavWarehouseDrawer() {
  
     const user = useCurrentUser()
@@ -36,6 +38,7 @@ function SidebarNavWarehouseDrawer() {
     const [isPending,startTransition] = useTransition()
   const [myerror,setError] = useState<string | undefined>("")
   const [success,setSuccess] = useState<string | undefined>("")
+  const queryClient = useQueryClient()
 
   
 
@@ -84,6 +87,7 @@ function SidebarNavWarehouseDrawer() {
             reset()
             dispatch(sidebarinventorywarehousedrawertrigger())
             toast.success("warehouse created")
+            queryClient.invalidateQueries("getWarehouses")
             
             
           
