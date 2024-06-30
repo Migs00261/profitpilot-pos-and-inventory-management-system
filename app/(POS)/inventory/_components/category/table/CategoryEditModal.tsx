@@ -1,9 +1,7 @@
 "use client"
 import React from 'react'
 import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure} from "@nextui-org/react";
-import { useEffect, useState,useCallback } from "react";
-import { sidebarinventorycategorydrawertrigger } from "@/redux/slices/sidebarInventoryCategoryDrawerSlice";
-import { useAppDispatch,useAppSelector } from "@/redux/hooks/hooks";
+import {useState} from "react";
 import { useCurrentUser } from "@/hooks/use-current-user";
 import { useForm } from 'react-hook-form'
 import {zodResolver} from "@hookform/resolvers/zod"
@@ -85,7 +83,9 @@ export default function CategoryEditModal({userDetails,isOpen,onOpenChange}:any)
               
             
             }
-            
+            if(categoryerror){
+              toast.error("something went wrong")
+            }
            
           
   
