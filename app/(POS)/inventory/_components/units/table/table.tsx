@@ -32,6 +32,13 @@ import { ReactGQLQuery } from "@/lib/reactquerycomponent";
 import { useCurrentUser } from "@/hooks/use-current-user";
 import { GET_UNITS } from "@/Graphql/Inventory/InventoryUnits";
 
+import { DELETE_UNIT } from "@/Graphql/Inventory/InventoryUnits";
+import {useDisclosure} from "@nextui-org/react";
+import DeleteRowModal from "@/app/(POS)/_components/DeleteRowModal";
+import { MdDelete } from "react-icons/md";
+import { MdModeEditOutline } from "react-icons/md";
+import {toast} from "react-toastify"
+
 const statusColorMap: Record<string, ChipProps["color"]> = {
   instock: "success",
   outofstock: "danger",
@@ -48,13 +55,22 @@ export default function TableComponent() {
   const [visibleColumns, setVisibleColumns] = React.useState<Selection>(new Set(INITIAL_VISIBLE_COLUMNS));
   const [statusFilter, setStatusFilter] = React.useState<Selection>("all");
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const {isOpen, onOpen, onOpenChange} = useDisclosure();
   const [sortDescriptor, setSortDescriptor] = React.useState<SortDescriptor>({
     column: "currentstock",
     direction: "ascending",
   });
+
+  const [unitId,setUnitId] = React.useState();
+  const [unitName,setUnitName] = React.useState();
+
   const dispatch = useAppDispatch()
   function openDrawer(){
     dispatch(sidebarinventoryunitsdrawertrigger())
+  }
+  function getUnitData(myUnitId:any,myUnitName:any){
+    setUnitId(myUnitId)
+    setUnitName(myUnitName)
   }
 
   const currentUser = useCurrentUser()
@@ -69,13 +85,15 @@ export default function TableComponent() {
   const mydata:any = data
   if(mydata){
     const unitData = mydata?.units
-  console.log(mydata,isLoading,error)
     
    if(!isLoading && !error){
     users = [...unitData]
    }
 
 
+  }
+  if(error){
+    toast.error("error fetching units")
   }
 
   const [page, setPage] = React.useState(1);
@@ -161,9 +179,11 @@ export default function TableComponent() {
                 </Button>
               </DropdownTrigger>
               <DropdownMenu>
-                <DropdownItem>View</DropdownItem>
                 <DropdownItem>Edit</DropdownItem>
-                <DropdownItem>Delete</DropdownItem>
+                <DropdownItem onClick={()=>{
+                  onOpen()
+                  getUnitData(user.id,user.unit)
+                }}><MdDelete className="mr-2 inline-flex"></MdDelete>Delete</DropdownItem>
               </DropdownMenu>
             </Dropdown>
           </div>
@@ -321,7 +341,8 @@ export default function TableComponent() {
   }, [selectedKeys, items.length, page, pages, hasSearchFilter]);
 
   return (
-    <Table
+    <div className="">
+      <Table
       isStriped
       aria-label="Example table with custom cells, pagination and sorting"
       isHeaderSticky
@@ -350,7 +371,7 @@ export default function TableComponent() {
           </TableColumn>
         )}
       </TableHeader>
-      <TableBody emptyContent={"No users found"} items={sortedItems}>
+      <TableBody emptyContent={"No units found"} items={sortedItems}>
         {(item) => (
           <TableRow key={item.id}>
             {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
@@ -358,5 +379,11 @@ export default function TableComponent() {
         )}
       </TableBody>
     </Table>
+
+      <div className="">
+        <DeleteRowModal desc="unit" Id={unitId} Name={unitName} isOpen={isOpen} onOpenChange={onOpenChange} graphqlquery={DELETE_UNIT} queryInvalidationName="getUnits"></DeleteRowModal>
+       </div>
+    </div>
+    
   );
 }

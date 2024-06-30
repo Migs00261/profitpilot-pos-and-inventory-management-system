@@ -27,6 +27,7 @@ import { sidebarinventoryunitsdrawertrigger } from "@/redux/slices/sidebarInvent
 import { CREATE_UNIT } from "@/Graphql/Inventory/InventoryUnits";
 import {toast} from "react-toastify"
 import { FiPlus } from "react-icons/fi";
+import { useQueryClient } from 'react-query';
 
 function SidebarNavUnitDrawer() {
  
@@ -38,6 +39,7 @@ function SidebarNavUnitDrawer() {
     const [isPending,startTransition] = useTransition()
   const [myerror,setError] = useState<string | undefined>("")
   const [success,setSuccess] = useState<string | undefined>("")
+  const queryClient = useQueryClient()
 
   
 
@@ -83,6 +85,7 @@ function SidebarNavUnitDrawer() {
             reset()
             dispatch(sidebarinventoryunitsdrawertrigger())
             toast.success("unit created")
+            queryClient.invalidateQueries("getUnits")
             
             
           
