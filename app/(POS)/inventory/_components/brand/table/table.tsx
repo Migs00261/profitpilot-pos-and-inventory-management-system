@@ -34,6 +34,13 @@ import { useCurrentUser } from "@/hooks/use-current-user";
 import Image from "next/image";
 import {toast} from "react-toastify"
 
+import { DELETE_BRAND } from "@/Graphql/Inventory/InventoryBrands";
+import {useDisclosure} from "@nextui-org/react";
+import DeleteRowModal from "@/app/(POS)/_components/DeleteRowModal";
+import { MdDelete } from "react-icons/md";
+import { MdModeEditOutline } from "react-icons/md";
+
+
 const statusColorMap: Record<string, ChipProps["color"]> = {
   instock: "success",
   outofstock: "danger",
@@ -64,6 +71,18 @@ export default function TableComponent() {
   },{
     refetchInterval:20000
   })
+  if(error){
+    toast.error("error fetching brands")
+  }
+
+  const [brandId,setBrandId] = React.useState();
+  const [brandName,setBrandName] = React.useState();
+  const {isOpen, onOpen, onOpenChange} = useDisclosure();
+
+  function getBrandData(myBrandId:any,myBrandName:any){
+    setBrandId(myBrandId)
+    setBrandName(myBrandName)
+  }
 
 
   const mydata:any = data
@@ -80,6 +99,7 @@ export default function TableComponent() {
    }
 
   }
+  
   const [page, setPage] = React.useState(1);
 
   const hasSearchFilter = Boolean(filterValue);
@@ -160,10 +180,14 @@ export default function TableComponent() {
                 </Button>
               </DropdownTrigger>
               <DropdownMenu>
-                <DropdownItem>View</DropdownItem>
+               
                 <DropdownItem>Edit</DropdownItem>
-                <DropdownItem>Delete</DropdownItem>
+                <DropdownItem onClick={()=>{
+                  onOpen()
+                  getBrandData(user.id,user.brand)
+                }}><MdDelete className="mr-2 inline-flex"></MdDelete>Delete</DropdownItem>
               </DropdownMenu>
+             
             </Dropdown>
           </div>
         );
@@ -320,7 +344,8 @@ export default function TableComponent() {
   }, [selectedKeys, items.length, page, pages, hasSearchFilter]);
 
   return (
-    <Table
+    <div className="">
+      <Table
       isStriped
       aria-label="Example table with custom cells, pagination and sorting"
       isHeaderSticky
@@ -357,5 +382,12 @@ export default function TableComponent() {
         )}
       </TableBody>
     </Table>
+
+      <div className="">
+        <DeleteRowModal desc="brand" Id={brandId} Name={brandName} isOpen={isOpen} onOpenChange={onOpenChange} graphqlquery={DELETE_BRAND} queryInvalidationName="getInventoryBrands"></DeleteRowModal>
+       </div>
+
+    </div>
+    
   );
 }

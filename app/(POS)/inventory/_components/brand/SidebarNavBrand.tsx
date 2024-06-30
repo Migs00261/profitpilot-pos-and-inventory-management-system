@@ -28,6 +28,7 @@ import { BrandsSchema } from "@/schemas";
 import { toast } from "react-toastify";
 import { CREATE_BRAND } from "@/Graphql/Inventory/InventoryBrands";
 import { FiPlus } from "react-icons/fi";
+import { useQueryClient } from 'react-query';
 function SidebarNavBrand() {
   const user:any = useCurrentUser()
     const dispatch = useAppDispatch()
@@ -36,6 +37,7 @@ function SidebarNavBrand() {
     const [receivedUrl,setReceivedUrl] = useState<String>("")
     const [isPending,startTransition] = useTransition()
     const [createBrand,{data,loading,error:branderror}] = useMutation(CREATE_BRAND)
+    const queryClient = useQueryClient()
 
     
     const [myerror,setError] = useState<string | undefined>("")
@@ -84,6 +86,7 @@ function SidebarNavBrand() {
               reset()
               dispatch(sidebarnavbrandtrigger())
               toast.success("brand created")
+              queryClient.invalidateQueries("getInventoryBrands")
               
               
             

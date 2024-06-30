@@ -10,6 +10,13 @@ mutation CREATEBRAND($myuserId:String!,$mybrand:String!,$myimage:String!,$mydesc
         description
   }
 }`
+export const DELETE_BRAND = gql/* GraphQL */`
+mutation DELETEBRAND($myId:String!){
+    deleteBrand(id:$myId){
+        status
+        message
+  }
+}`
 
 export const GET_BRANDS = gql/* GraphQL */`
 query GETBRANDS($myuserId:String!){
