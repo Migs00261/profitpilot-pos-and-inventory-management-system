@@ -36,7 +36,7 @@ import {toast} from "react-toastify"
 import { MdDelete } from "react-icons/md";
 import {useDisclosure} from "@nextui-org/react";
 import CategoryDeleteModal from "./CategoryDeleteModal";
-
+import CategoryEditModal from "./CategoryEditModal";
 
 
 const statusColorMap: Record<string, ChipProps["color"]> = {
@@ -59,6 +59,8 @@ export default function TableComponent() {
   const [rowId,setRowId] = React.useState("")
   const [deleteModalDesc,setDeleteModalDesc] = React.useState("")
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
+  const {isOpen:editModalIsOpen, onOpen:editModalOnOpen, onOpenChange:editModalOnOpenChange} = useDisclosure();
+  const [userDetails,setUserDetails] = React.useState()
   const [sortDescriptor, setSortDescriptor] = React.useState<SortDescriptor>({
     column: "currentstock",
     direction: "ascending",
@@ -85,15 +87,20 @@ export default function TableComponent() {
     users = [...categoryData]
    }
    if(errorscategory){
+
     toast.error("error loading available categories")
 
    }
 
   }
-function DeleteUserFunction(id:string,desc:string){
-setDeleteModalDesc(desc)
- setRowId(id)
-}
+    function DeleteUserFunction(id:string,desc:string){
+    setDeleteModalDesc(desc)
+    setRowId(id)
+    }
+    function EditUserFunction(user:any){
+      setUserDetails(user)
+
+    }
 
 
   const [page, setPage] = React.useState(1);
@@ -182,7 +189,10 @@ setDeleteModalDesc(desc)
                 </Button>
               </DropdownTrigger>
               <DropdownMenu>
-                <DropdownItem><MdModeEditOutline className="mr-2 inline-flex"></MdModeEditOutline>Edit</DropdownItem>
+                <DropdownItem onClick={()=>{
+                  editModalOnOpen()
+                  EditUserFunction(user)
+                }}><MdModeEditOutline className="mr-2 inline-flex"></MdModeEditOutline>Edit</DropdownItem>
                 
                 
                 <DropdownItem onClick={()=>{
@@ -382,7 +392,7 @@ setDeleteModalDesc(desc)
           </TableColumn>
         )}
       </TableHeader>
-      <TableBody emptyContent={"No users found"} items={sortedItems}>
+      <TableBody emptyContent={"No categories found"} items={sortedItems}>
         {(item) => (
           <TableRow key={item.id}>
             {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
@@ -392,7 +402,7 @@ setDeleteModalDesc(desc)
     </Table>
     <div className="">
       <CategoryDeleteModal desc={deleteModalDesc} statusIsOpen={isOpen} statusOnOpenChange={onOpenChange} RowId={rowId} description="category"></CategoryDeleteModal>
-      
+      <CategoryEditModal userDetails={userDetails} isOpen={editModalIsOpen} onOpenChange={editModalOnOpenChange}></CategoryEditModal>
     </div>
 
    </div>
