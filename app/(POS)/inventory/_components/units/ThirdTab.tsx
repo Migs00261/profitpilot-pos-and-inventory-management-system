@@ -19,11 +19,10 @@ function ThirdTab() {
         <Tab
           key="photos"
           title={
-            <div className="flex items-center space-x-2">
+      
              
               <span>All Units</span>
-              <Chip size="sm"  variant="faded">9</Chip>
-            </div>
+             
           }
         />
         
