@@ -39,7 +39,7 @@ import {useDisclosure} from "@nextui-org/react";
 import DeleteRowModal from "@/app/(POS)/_components/DeleteRowModal";
 import { MdDelete } from "react-icons/md";
 import { MdModeEditOutline } from "react-icons/md";
-
+import BrandEditModal from "./BrandEditModal";
 
 const statusColorMap: Record<string, ChipProps["color"]> = {
   instock: "success",
@@ -58,6 +58,8 @@ export default function TableComponent() {
   const [visibleColumns, setVisibleColumns] = React.useState<Selection>(new Set(INITIAL_VISIBLE_COLUMNS));
   const [statusFilter, setStatusFilter] = React.useState<Selection>("all");
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const {isOpen:editModalIsOpen, onOpen:editModalOnOpen, onOpenChange:editModalOnOpenChange} = useDisclosure();
+  const [unitData, setUnitData] = React.useState()
   const [sortDescriptor, setSortDescriptor] = React.useState<SortDescriptor>({
     column: "currentstock",
     direction: "ascending",
@@ -181,7 +183,10 @@ export default function TableComponent() {
               </DropdownTrigger>
               <DropdownMenu>
                
-                <DropdownItem>Edit</DropdownItem>
+                <DropdownItem onClick={()=>{
+                  editModalOnOpen()
+                  setUnitData(user)
+                }}><MdModeEditOutline className="mr-2 inline-flex"></MdModeEditOutline>Edit</DropdownItem>
                 <DropdownItem onClick={()=>{
                   onOpen()
                   getBrandData(user.id,user.brand)
@@ -385,6 +390,7 @@ export default function TableComponent() {
 
       <div className="">
         <DeleteRowModal desc="brand" Id={brandId} Name={brandName} isOpen={isOpen} onOpenChange={onOpenChange} graphqlquery={DELETE_BRAND} queryInvalidationName="getInventoryBrands"></DeleteRowModal>
+        <BrandEditModal userDetails={unitData} isOpen={editModalIsOpen} onOpenChange={editModalOnOpenChange}></BrandEditModal>
        </div>
 
     </div>
