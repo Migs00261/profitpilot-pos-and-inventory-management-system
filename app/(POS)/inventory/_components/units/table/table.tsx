@@ -38,6 +38,7 @@ import DeleteRowModal from "@/app/(POS)/_components/DeleteRowModal";
 import { MdDelete } from "react-icons/md";
 import { MdModeEditOutline } from "react-icons/md";
 import {toast} from "react-toastify"
+import UnitEditModal from "./UnitEditModal";
 
 const statusColorMap: Record<string, ChipProps["color"]> = {
   instock: "success",
@@ -56,6 +57,10 @@ export default function TableComponent() {
   const [statusFilter, setStatusFilter] = React.useState<Selection>("all");
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
+  const [unitData,setUnitData] = React.useState();
+
+  const {isOpen:editModalIsOpen, onOpen:editModalOnOpen, onOpenChange:editModalOpenChange} = useDisclosure();
+
   const [sortDescriptor, setSortDescriptor] = React.useState<SortDescriptor>({
     column: "currentstock",
     direction: "ascending",
@@ -179,7 +184,10 @@ export default function TableComponent() {
                 </Button>
               </DropdownTrigger>
               <DropdownMenu>
-                <DropdownItem>Edit</DropdownItem>
+                <DropdownItem onClick={()=>{
+                  editModalOnOpen()
+                  setUnitData(user)
+                }}><MdModeEditOutline className="mr-2 inline-flex"></MdModeEditOutline>Edit</DropdownItem>
                 <DropdownItem onClick={()=>{
                   onOpen()
                   getUnitData(user.id,user.unit)
@@ -382,6 +390,7 @@ export default function TableComponent() {
 
       <div className="">
         <DeleteRowModal desc="unit" Id={unitId} Name={unitName} isOpen={isOpen} onOpenChange={onOpenChange} graphqlquery={DELETE_UNIT} queryInvalidationName="getUnits"></DeleteRowModal>
+        <UnitEditModal userDetails={unitData} isOpen={editModalIsOpen} onOpenChange={editModalOpenChange}></UnitEditModal>
        </div>
     </div>
     

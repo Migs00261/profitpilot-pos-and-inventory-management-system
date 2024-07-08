@@ -23,17 +23,16 @@ mutation DELETEUNIT($myId:String!){
 }
 
 `
-export const UPDATE_WAREHOUSE = gql/* GraphQL */`
-mutation UPDATEWAREHOUSE($mywarehouseId:String!,$myuserId:String!,$mywarehouse:String!,$myemail:String!,$myphonenumber:String!,$mycountry:String!,$mycity:String!,$myzipcode:String!){
-    updateWarehouse(id:$mywarehouseId,userId:$myuserId,warehouse:$mywarehouse,email:$myemail,phone:$myphonenumber,country:$mycountry,city:$mycity,zipCode:$myzipcode){
-    id
-    userId
-    warehouse
-    phone
-    country
-    city
-    email
-    zipCode
+export const UPDATE_UNIT = gql/* GraphQL */`
+mutation UPDATEUNIT($myId:String!,$myuserId:String!,$myunit:String,$myshortName:String,$mybaseUnit:String,$myoperator:String,$myoperatorValue:String){
+    updateUnit(id:$myId,userId:$myuserId,unit:$myunit,shortName:$myshortName,baseUnit:$mybaseUnit,operator:$myoperator,operatorValue:$myoperatorValue){
+        id
+        userId
+        unit
+        shortName
+        baseUnit
+        operator
+        operatorValue
   }
 }
 
