@@ -25,6 +25,7 @@ import { toast } from "react-toastify";
 import { UPDATE_CATEGORY } from '@/Graphql/Inventory/InventoryCategory';
 import { CategoryEditSchema } from '@/schemas/InventoryEditSchemas';
 import { useQueryClient } from 'react-query';
+import WarehouseEditModal from '../../warehouse/table/WarehouseEditModal';
 export default function CategoryEditModal({userDetails,isOpen,onOpenChange}:any) {
   const user:any = useCurrentUser()
     const queryClient = useQueryClient()

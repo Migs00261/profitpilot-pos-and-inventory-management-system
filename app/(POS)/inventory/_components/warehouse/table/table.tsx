@@ -37,6 +37,8 @@ import DeleteRowModal from "@/app/(POS)/_components/DeleteRowModal";
 import {useDisclosure} from "@nextui-org/react";
 import { DELETE_WAREHOUSE } from "@/Graphql/Inventory/InventoryWarehouse";
 import { toast } from "react-toastify";
+import WarehouseEditModal from "./WarehouseEditModal";
+
 
 
 const statusColorMap: Record<string, ChipProps["color"]> = {
@@ -44,7 +46,7 @@ const statusColorMap: Record<string, ChipProps["color"]> = {
   outofstock: "danger",
 };
 let users:any = []
-const INITIAL_VISIBLE_COLUMNS = ["id","warehouse","phone","email","zipcode","actions"];
+const INITIAL_VISIBLE_COLUMNS = ["warehouse","phone","email","zipcode","actions"];
 
 type User = typeof users[0];
 
@@ -55,6 +57,7 @@ export default function TableComponent() {
   const [statusFilter, setStatusFilter] = React.useState<Selection>("all");
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
+  const {isOpen:editModalIsOpen, onOpen:editModalOnOpen, onOpenChange:editModalOpenChange} = useDisclosure();
   const [warehouseData,setWarehouseData] = React.useState();
   const [warehouseId,setWarehouseId] = React.useState();
   const [warehouseName,setWarehouseName] = React.useState();
@@ -71,6 +74,9 @@ export default function TableComponent() {
   function getWarehouseData(warehouseId:any,WarehouseName:any){
     setWarehouseId(warehouseId)
     setWarehouseName(WarehouseName)
+  }
+  function updateWarehouseData(data:any){
+    setWarehouseData(data)
   }
   
   const currentUser = useCurrentUser()
@@ -182,7 +188,12 @@ export default function TableComponent() {
                 </Button>
               </DropdownTrigger>
               <DropdownMenu>
-                <DropdownItem><MdModeEditOutline className="mr-2 inline-flex"></MdModeEditOutline>Edit</DropdownItem>
+                <DropdownItem onClick={async()=>{
+                 
+                 updateWarehouseData(user)
+                
+                  editModalOnOpen()
+                }}><MdModeEditOutline className="mr-2 inline-flex"></MdModeEditOutline>Edit</DropdownItem>
                 <DropdownItem onClick={()=>{
                   onOpen()
                   getWarehouseData(user.id,user.warehouse)
@@ -388,7 +399,8 @@ export default function TableComponent() {
 
        <div className="">
         <DeleteRowModal desc="warehouse" Id={warehouseId} Name={warehouseName} isOpen={isOpen} onOpenChange={onOpenChange} graphqlquery={DELETE_WAREHOUSE} queryInvalidationName="getWarehouses"></DeleteRowModal>
-       
+        <WarehouseEditModal userDetails={warehouseData} isOpen={editModalIsOpen} onOpenChange={editModalOpenChange}></WarehouseEditModal>
+
        </div>
 
     </div>
